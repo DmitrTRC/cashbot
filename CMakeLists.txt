@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.23)
 project(cash_bot)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 20)
 
 
 
@@ -29,4 +29,4 @@ message(STATUS "cash_bot Output directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 
 add_executable(cash_bot src/main.cpp)
 
-target_link_libraries(cash_bot TgBot ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${CURL_LIBRARIES})
+target_link_libraries(cash_bot cpp_dotenv TgBot ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${CURL_LIBRARIES})
