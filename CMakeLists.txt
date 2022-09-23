@@ -18,7 +18,9 @@ if (CURL_FOUND)
     add_definitions(-DHAVE_CURL)
 endif ()
 
-add_subdirectory(tgbot-cpp)
+add_subdirectory(tgbot-cpp) # Telegram API
+
+add_subdirectory(cpp-dotenv) #  Loading Environment
 
 add_executable(echobot src/main.cpp)
 
