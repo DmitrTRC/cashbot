@@ -3,7 +3,7 @@ project(cash_bot)
 
 set(CMAKE_CXX_STANDARD 14)
 
-project(echobot)
+
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
 set(Boost_USE_MULTITHREADED ON)
@@ -12,7 +12,9 @@ find_package(Threads REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(Boost COMPONENTS system REQUIRED)
 find_package(CURL)
+
 include_directories(/usr/local/include ${OPENSSL_ROOT_DIR}/include  ${Boost_INCLUDE_DIR})
+
 if (CURL_FOUND)
     include_directories(${CURL_INCLUDE_DIRS})
     add_definitions(-DHAVE_CURL)
@@ -22,6 +24,9 @@ add_subdirectory(tgbot-cpp) # Telegram API
 
 add_subdirectory(cpp-dotenv) #  Loading Environment
 
-add_executable(echobot src/main.cpp)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${cash_bot_SOURCE_DIR}/bin)
+message(STATUS "cash_bot Output directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 
-target_link_libraries(echobot TgBot ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${CURL_LIBRARIES})
+add_executable(cash_bot src/main.cpp)
+
+target_link_libraries(cash_bot TgBot ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${CURL_LIBRARIES})
