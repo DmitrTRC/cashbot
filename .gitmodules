@@ -1,6 +1,6 @@
 [submodule "tgbot-cpp"]
 	path = tgbot-cpp
 	url = ./tgbot-cpp
-[submodule "cpp-dotenv"]
-	path = cpp-dotenv
-	url = ./cpp-dotenv
+[submodule "cpp-cdotenv"]
+	path = cpp-cdotenv
+	url = ./cpp-cdotenv
