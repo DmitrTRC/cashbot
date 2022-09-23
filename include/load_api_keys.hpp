@@ -9,7 +9,10 @@
 #include <map>
 
 
-std::map<std::string, std::string> load_environment (const std::string &);
+using Tokens = std::map<std::string, std::string>;
+
+const Tokens load_environment (const std::string & = ".env");
+
 
 #endif //ECHOBOT_DEV_LOAD_API_KEYS_HPP
 

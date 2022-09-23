@@ -2,12 +2,23 @@
 
 #include <tgbot/tgbot.h>
 
+#include "load_api_keys.hpp"
+
 
 #include <stdio.h>
 
 
 int main () {
-    TgBot::Bot bot ("5664821903:AAGuQg1A08I2YmO4hVsQGwsLp-aw5GTDHrU");
+    Tokens api_keys;
+
+    api_keys = load_environment ("bot.env");
+
+    if (api_keys.empty ()) {
+        std::cerr << "No API keys found" << std::endl;
+        return 1;
+    }
+
+    TgBot::Bot bot (api_keys["TELEGRAM_API"]);
     bot.getEvents ().onCommand ("start", [ &bot ] (TgBot::Message::Ptr message) {
         bot.getApi ().sendMessage (message->chat->id, "Hi!");
     });

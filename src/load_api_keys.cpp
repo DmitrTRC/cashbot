@@ -4,21 +4,33 @@
 
 #include "load_api_keys.hpp"
 
+
 #include <fstream>
+#include <iostream>
 #include <map>
 #include <sstream>
 
 
 /// Read API keys from env file
-std::map<std::string, std::string> load_environment (const std::string &file_name = "bot.env") {
+const Tokens load_environment (const std::string &file_name) {
     std::map<std::string, std::string> env;
-    std::ifstream env_file (file_name);
 
-    if (env_file.is_open ()) {
+    std::ifstream env_file;
+
+
+
+    try {
+
+        env_file.open (file_name);
+        if (env_file.fail()) {
+            throw std::runtime_error ("Failed to open file");
+        }
+
+
         std::string line;
 
         while (std::getline (env_file, line)) {
-            if (line.empty ()) {
+            if (line.empty () or line.starts_with ("#")) {
                 continue;
             }
             std::istringstream line_stream (line);
@@ -29,8 +41,13 @@ std::map<std::string, std::string> load_environment (const std::string &file_nam
                     env[key] = value;
                 }
             }
+
         }
+    } catch (const std::runtime_error &e) {
+        std::cerr << "Exception opening/reading file: " << e.what () << std::endl;
     }
+
+    env_file.close ();
 
     return env;
 }
