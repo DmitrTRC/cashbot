@@ -4,8 +4,7 @@
 
 #include "load_api_keys.hpp"
 
-
-#include <stdio.h>
+#include <iostream>
 
 
 int main () {
