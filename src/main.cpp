@@ -39,6 +39,7 @@ int main () {
         std::cout << "Bot first name: " << me->firstName << std::endl;
         std::cout << "Bot last name: " << me->lastName << std::endl;
         std::cout << "Bot user name: " << me->username << std::endl;
+        std::cout << "Bot language code: " << me->languageCode << std::endl;
 
         TgBot::TgLongPoll longPoll (bot);
         while (true) {
