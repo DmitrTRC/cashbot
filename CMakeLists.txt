@@ -27,12 +27,20 @@ add_subdirectory(lib/tgbot-cpp) # Telegram API
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 message(STATUS "cash_bot Output directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 
+
+### 3-d Party Libraries
+include(FetchContent)
+
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
+FetchContent_MakeAvailable(json)
+
+
 ### Build executable
 
 set(SOURCES
-        src/load_api_keys.cpp
         src/main.cpp
-        src/Auth.cpp src/Auth.hpp)
+        src/Env_Keeper.cpp
+        src/Flow_Bot.cpp )
 
 add_executable(
         cash_bot
@@ -44,4 +52,9 @@ target_include_directories(cash_bot
         ${PROJECT_SOURCE_DIR}/include
         )
 
-target_link_libraries(cash_bot TgBot ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${CURL_LIBRARIES})
+target_link_libraries(cash_bot TgBot
+        ${CMAKE_THREAD_LIBS_INIT}
+        ${OPENSSL_LIBRARIES}
+        ${Boost_LIBRARIES}
+        ${CURL_LIBRARIES}
+        nlohmann_json::nlohmann_json)
