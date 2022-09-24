@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall")
 set(Boost_USE_MULTITHREADED ON)
 
+set(ENV{OPENSSL_ROOT_DIR} "/opt/homebrew/opt/openssl@3")
+
 find_package(Threads REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(Boost COMPONENTS system REQUIRED)
@@ -30,7 +32,7 @@ message(STATUS "cash_bot Output directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 set(SOURCES
         src/load_api_keys.cpp
         src/main.cpp
-        )
+        src/Auth.cpp src/Auth.hpp)
 
 add_executable(
         cash_bot
