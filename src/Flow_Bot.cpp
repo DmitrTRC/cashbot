@@ -6,7 +6,6 @@
 
 #include "Flow_Bot.hpp"
 
-
 #include <iostream>
 
 
@@ -20,13 +19,18 @@ FlowBot::FlowBot () {
 
     _bot = new TgBot::Bot (_env_keeper.get_Token ());
 
+    auto updates = _bot->getApi ().getUpdates (); ///!!! This is a workaround for the bug in the library
+
+    //Print the updates
+    for (auto &update: updates) {
+        std::cout << update->message->text << std::endl;
+    }
+
+
     _initHandlers ();
-
 }
 
-FlowBot::~FlowBot () {
-    delete _bot;
-}
+FlowBot::~FlowBot () { delete _bot; }
 
 void FlowBot::Start () {
     _is_running = true;
@@ -55,17 +59,14 @@ void FlowBot::getInfo () const {
     std::cout << "Bot last name: " << me->lastName << std::endl;
     std::cout << "Bot user name: " << me->username << std::endl;
     std::cout << "Bot language code: " << me->languageCode << std::endl;
-
 }
 
-void FlowBot::Stop () {
-    _is_running = false;
-
-}
+void FlowBot::Stop () { _is_running = false; }
 
 void FlowBot::_initHandlers () {
     _bot->getEvents ().onCommand ("start", [ & ] (TgBot::Message::Ptr message) {
-        _bot->getApi ().sendMessage (message->chat->id, message->from->firstName + ", hello!");
+        _bot->getApi ().sendMessage (message->chat->id,
+                                     message->from->firstName + ", hello!");
     });
 
     _bot->getEvents ().onCommand ("stop", [ & ] (TgBot::Message::Ptr message) {
@@ -74,11 +75,12 @@ void FlowBot::_initHandlers () {
     });
 
     _bot->getEvents ().onAnyMessage ([ & ] (TgBot::Message::Ptr message) {
-        std::cout << "User : " << message->from->id << " wrote " << message->text << std::endl;
+        std::cout << "User : " << message->from->id << " wrote " << message->text
+                  << std::endl;
         if (StringTools::startsWith (message->text, "/start")) {
             return;
         }
-        _bot->getApi ().sendMessage (message->chat->id, "Your message is: " + message->text);
+        _bot->getApi ().sendMessage (message->chat->id,
+                                     "Your message is: " + message->text);
     });
-
 }
