@@ -33,12 +33,16 @@ void FlowBot::Start () {
     getInfo ();
     try {
         TgBot::TgLongPoll longPoll (*_bot);
-        while (_is_running) {
+        while (true) {
+            if (!_is_running) {
+                throw TgBot::TgException ("The bot is stopped by the user");
+            }
             std::cout << "Long poll started" << std::endl;
             longPoll.start ();
         }
     } catch (TgBot::TgException &e) {
-        std::cout << "Bot error: " << e.what () << std::endl;
+
+        std::cout << "Bot stopped report : " << e.what () << std::endl;
     }
 }
 
@@ -61,10 +65,10 @@ void FlowBot::Stop () {
 
 void FlowBot::_initHandlers () {
     _bot->getEvents ().onCommand ("start", [ & ] (TgBot::Message::Ptr message) {
-        _bot->getApi ().sendMessage (message->chat->id, "Hi!");
+        _bot->getApi ().sendMessage (message->chat->id, message->from->firstName + ", hello!");
     });
 
-    _bot->getEvents ().onCommand ("emergency", [ & ] (TgBot::Message::Ptr message) {
+    _bot->getEvents ().onCommand ("stop", [ & ] (TgBot::Message::Ptr message) {
         _bot->getApi ().sendMessage (message->chat->id, "Bye!");
         Stop ();
     });
