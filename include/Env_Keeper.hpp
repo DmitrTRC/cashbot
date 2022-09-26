@@ -21,6 +21,10 @@ public:
 
     [[nodiscard]] std::string get_Token () const;
 
+    void set_last_stop_id (int);
+
+    int get_last_stop_id ();
+
     [[nodiscard]] bool is_Empty () const;
 
     bool is_valid_user_id (const std::string &);
@@ -28,7 +32,11 @@ public:
 private:
     json _env;
 
-    static json load_environment (const std::string & = ".config.json");
+    std::string _path;
+
+    json load_environment ();
+
+    void save_environment ();
 
 };
 

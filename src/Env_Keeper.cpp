@@ -16,6 +16,7 @@
  * @param path The path to the environment file.
  */
 EnvKeeper::EnvKeeper (const std::string &path) {
+    _path = path;
     _env = load_environment ();
 }
 
@@ -27,15 +28,24 @@ EnvKeeper::EnvKeeper (const std::string &path) {
  *
  * @return A json object
  */
-json EnvKeeper::load_environment (const std::string &json_file_name) {
+json EnvKeeper::load_environment () {
 
-    std::ifstream json_file (json_file_name);
+
+    std::ifstream json_file (_path);
 
     json env = json::parse (json_file);
 
 
     return env;
 }
+
+///Save environment
+void EnvKeeper::save_environment () {
+    std::ofstream json_file (_path);
+    json_file << _env.dump (4);
+
+}
+
 
 /**
  * Checks if the user id is valid
@@ -70,6 +80,16 @@ std::string EnvKeeper::get_Token () const {
 
     return token;
 }
+
+void EnvKeeper::set_last_stop_id (int id) {
+    _env["LAST_STOP_ID"] = id;
+    save_environment ();
+}
+
+int EnvKeeper::get_last_stop_id () {
+    return _env["LAST_STOP_ID"].get<int> ();
+}
+
 
 /**
  * The destructor for the EnvKeeper class.

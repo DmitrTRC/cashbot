@@ -7,6 +7,7 @@
 #include "Flow_Bot.hpp"
 
 #include <iostream>
+#include <chrono>
 
 
 FlowBot::FlowBot () {
@@ -19,14 +20,6 @@ FlowBot::FlowBot () {
 
     _bot = new TgBot::Bot (_env_keeper.get_Token ());
 
-    auto updates = _bot->getApi ().getUpdates (); ///!!! This is a workaround for the bug in the library
-
-    //Print the updates
-    for (auto &update: updates) {
-        std::cout << update->message->text << std::endl;
-    }
-
-
     _initHandlers ();
 }
 
@@ -37,16 +30,22 @@ void FlowBot::Start () {
     getInfo ();
     try {
         TgBot::TgLongPoll longPoll (*_bot);
+
         while (true) {
+
+            std::cout << "Long poll started" << std::endl;
+
+
+            longPoll.start ();
+
             if (!_is_running) {
                 throw TgBot::TgException ("The bot is stopped by the user");
             }
-            std::cout << "Long poll started" << std::endl;
-            longPoll.start ();
         }
     } catch (TgBot::TgException &e) {
-
         std::cout << "Bot stopped report : " << e.what () << std::endl;
+        auto last_id = get_last_message_id ();
+        _env_keeper.set_last_stop_id (last_id);
     }
 }
 
@@ -61,7 +60,9 @@ void FlowBot::getInfo () const {
     std::cout << "Bot language code: " << me->languageCode << std::endl;
 }
 
-void FlowBot::Stop () { _is_running = false; }
+void FlowBot::Stop () {
+    _is_running = false;
+}
 
 void FlowBot::_initHandlers () {
     _bot->getEvents ().onCommand ("start", [ & ] (TgBot::Message::Ptr message) {
@@ -70,8 +71,16 @@ void FlowBot::_initHandlers () {
     });
 
     _bot->getEvents ().onCommand ("stop", [ & ] (TgBot::Message::Ptr message) {
-        _bot->getApi ().sendMessage (message->chat->id, "Bye!");
-        Stop ();
+
+        if (_env_keeper.get_last_stop_id () >= message->messageId) {
+            _bot->getApi ().sendMessage (message->chat->id,
+                                         "The bot is already stopped");
+        } else {
+            _bot->getApi ().sendMessage (message->chat->id,
+                                         "The bot is stopped");
+            Stop ();
+        }
+
     });
 
     _bot->getEvents ().onAnyMessage ([ & ] (TgBot::Message::Ptr message) {
@@ -83,4 +92,10 @@ void FlowBot::_initHandlers () {
         _bot->getApi ().sendMessage (message->chat->id,
                                      "Your message is: " + message->text);
     });
+}
+
+// GetUpdates and return last message id
+int FlowBot::get_last_message_id () {
+    auto updates = _bot->getApi ().getUpdates ();
+    return updates.back ()->message->messageId;
 }

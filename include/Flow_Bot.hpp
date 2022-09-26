@@ -28,6 +28,8 @@ private:
     TgBot::Bot *_bot;
 
     void _initHandlers ();
+
+    int get_last_message_id();
 };
 
 
