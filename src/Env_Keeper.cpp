@@ -90,6 +90,8 @@ int EnvKeeper::get_last_stop_id () {
     return _env["LAST_STOP_ID"].get<int> ();
 }
 
+EnvKeeper::EnvKeeper () : EnvKeeper (DEFAULT_PATH) {}
+
 
 /**
  * The destructor for the EnvKeeper class.

@@ -12,10 +12,14 @@
 
 using json = nlohmann::json;
 
+const std::string DEFAULT_PATH = ".config.json";
+
 
 class EnvKeeper {
 public:
-    explicit EnvKeeper (const std::string & = ".config.json");
+    EnvKeeper ();
+
+    explicit EnvKeeper (const std::string &);
 
     ~EnvKeeper ();
 
