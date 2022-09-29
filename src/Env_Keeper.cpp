@@ -54,10 +54,6 @@ void EnvKeeper::save_environment () {
  *
  * @return True if the user id is valid, false otherwise
  */
-bool EnvKeeper::is_valid_user_id (const long long &user_id) {
-
-    return _env["USER_ID"].contains (std::to_string (user_id));
-}
 
 /**
  * Returns true if the environment is empty, false otherwise.
@@ -91,6 +87,18 @@ int EnvKeeper::get_last_stop_id () {
 }
 
 EnvKeeper::EnvKeeper () : EnvKeeper (DEFAULT_PATH) {}
+
+/// Return  a set of user ids from the environment
+std::set<long long> EnvKeeper::get_user_ids () const {
+    std::set<long long> user_ids;
+    auto ids = _env["USER_ID"].get<std::vector<long long>> ();
+
+    for (auto id: ids) {
+        user_ids.insert (id);
+    }
+
+    return user_ids;
+}
 
 
 /**

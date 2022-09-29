@@ -106,9 +106,9 @@ int FlowBot::get_last_message_id () {
 }
 
 bool FlowBot::isAuthenticated (const long long &user_id) {
+    auto ids = _env_keeper.get_user_ids ();
 
-    return _env_keeper.is_valid_user_id (user_id);
-
+    return ids.find (user_id) != ids.end ();
 }
 
 void FlowBot::send_wrong_auth_message (const long long &user_id) {

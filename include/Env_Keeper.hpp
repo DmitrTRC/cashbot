@@ -8,6 +8,7 @@
 #include <string>
 #include <map>
 #include <nlohmann/json.hpp>
+#include <set>
 
 
 using json = nlohmann::json;
@@ -31,7 +32,8 @@ public:
 
     [[nodiscard]] bool is_Empty () const;
 
-    bool is_valid_user_id (const long long&);
+    [[nodiscard]] std::set<long long> get_user_ids () const;
+
 
 private:
     json _env;
