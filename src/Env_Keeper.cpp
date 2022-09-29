@@ -54,9 +54,9 @@ void EnvKeeper::save_environment () {
  *
  * @return True if the user id is valid, false otherwise
  */
-bool EnvKeeper::is_valid_user_id (const std::string &user_id) {
+bool EnvKeeper::is_valid_user_id (const long long &user_id) {
 
-    return _env["USER_ID"].contains (user_id);
+    return _env["USER_ID"].contains (std::to_string (user_id));
 }
 
 /**

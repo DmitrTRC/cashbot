@@ -31,7 +31,7 @@ public:
 
     [[nodiscard]] bool is_Empty () const;
 
-    bool is_valid_user_id (const std::string &);
+    bool is_valid_user_id (const long long&);
 
 private:
     json _env;

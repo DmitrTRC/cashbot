@@ -64,10 +64,15 @@ void FlowBot::Stop () {
     _is_running = false;
 }
 
+/// Check Auth
 void FlowBot::_initHandlers () {
     _bot->getEvents ().onCommand ("start", [ & ] (TgBot::Message::Ptr message) {
-        _bot->getApi ().sendMessage (message->chat->id,
-                                     message->from->firstName + ", hello!");
+        if (isAuthenticated (message->from->id)) {
+            _bot->getApi ().sendMessage (message->chat->id, "Hello, " + message->from->firstName);
+        } else {
+            send_wrong_auth_message (message->from->id);
+        }
+
     });
 
     _bot->getEvents ().onCommand ("stop", [ & ] (TgBot::Message::Ptr message) {
@@ -99,3 +104,16 @@ int FlowBot::get_last_message_id () {
     auto updates = _bot->getApi ().getUpdates ();
     return updates.back ()->message->messageId;
 }
+
+bool FlowBot::isAuthenticated (const long long &user_id) {
+
+    return _env_keeper.is_valid_user_id (user_id);
+
+}
+
+void FlowBot::send_wrong_auth_message (const long long &user_id) {
+    _bot->getApi ().sendMessage (user_id, "You are not authenticated");
+}
+
+
+
