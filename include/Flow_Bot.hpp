@@ -20,7 +20,7 @@ public:
 
     void Stop ();
 
-    void getInfo() const;
+    void getInfo () const;
 
 private:
     bool _is_running;
@@ -29,9 +29,9 @@ private:
 
     void _initHandlers ();
 
-    int get_last_message_id();
+    int get_last_message_id ();
 
-    bool isAuthenticated(const long long  &user_id);
+    bool isAuthenticated (const long long &user_id);
 
     void send_wrong_auth_message (const long long &user_id);
 };

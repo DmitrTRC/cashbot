@@ -5,9 +5,10 @@
 #include <tgbot/tgbot.h>
 
 #include "Flow_Bot.hpp"
+#include "Helper.hpp"
 
+#include <initializer_list>
 #include <iostream>
-#include <chrono>
 
 
 FlowBot::FlowBot () {
@@ -66,15 +67,16 @@ void FlowBot::Stop () {
 
 /// Check Auth
 void FlowBot::_initHandlers () {
-    _bot->getEvents ().onCommand ("start", [ & ] (TgBot::Message::Ptr message) {
+    _bot->getEvents ().onCommand (Helper::onHelp, [ & ] (const TgBot::Message::Ptr &message) {
         if (isAuthenticated (message->from->id)) {
-            _bot->getApi ().sendMessage (message->chat->id, "Hello, " + message->from->firstName);
+            _bot->getApi ().sendMessage (message->chat->id,
+                                         Helper::helpMessage);
         } else {
             send_wrong_auth_message (message->from->id);
         }
     });
 
-    _bot->getEvents ().onCommand ("stop", [ & ] (TgBot::Message::Ptr message) {
+    _bot->getEvents ().onCommand ("stop", [ & ] (const TgBot::Message::Ptr &message) {
 
         if (isAuthenticated (message->from->id)) {
             if (_env_keeper.get_last_stop_id () >= message->messageId) {
@@ -91,7 +93,8 @@ void FlowBot::_initHandlers () {
         }
     });
 
-    _bot->getEvents ().onAnyMessage ([ & ] (TgBot::Message::Ptr message) {
+    //TODO: Filter /help,  ... commands
+    _bot->getEvents ().onAnyMessage ([ & ] (const TgBot::Message::Ptr &message) {
 
         if (isAuthenticated (message->from->id)) {
             std::cout << "User : " << message->from->id << " wrote " << message->text

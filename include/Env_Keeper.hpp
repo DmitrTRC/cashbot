@@ -32,6 +32,7 @@ public:
 
     [[nodiscard]] bool is_Empty () const;
 
+    //TODO: Refactor to size_t instead of long long
     [[nodiscard]] std::set<long long> get_user_ids () const;
 
 
