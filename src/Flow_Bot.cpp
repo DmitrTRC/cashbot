@@ -72,30 +72,38 @@ void FlowBot::_initHandlers () {
         } else {
             send_wrong_auth_message (message->from->id);
         }
-
     });
 
     _bot->getEvents ().onCommand ("stop", [ & ] (TgBot::Message::Ptr message) {
 
-        if (_env_keeper.get_last_stop_id () >= message->messageId) {
-            _bot->getApi ().sendMessage (message->chat->id,
-                                         "The bot is already stopped");
-        } else {
-            _bot->getApi ().sendMessage (message->chat->id,
-                                         "The bot is stopped");
-            Stop ();
-        }
+        if (isAuthenticated (message->from->id)) {
+            if (_env_keeper.get_last_stop_id () >= message->messageId) {
+                _bot->getApi ().sendMessage (message->chat->id,
+                                             "The bot is already stopped");
+            } else {
+                _bot->getApi ().sendMessage (message->chat->id,
+                                             "The bot is stopped");
+                Stop ();
+            }
 
+        } else {
+            send_wrong_auth_message (message->from->id);
+        }
     });
 
     _bot->getEvents ().onAnyMessage ([ & ] (TgBot::Message::Ptr message) {
-        std::cout << "User : " << message->from->id << " wrote " << message->text
-                  << std::endl;
-        if (StringTools::startsWith (message->text, "/start")) {
-            return;
+
+        if (isAuthenticated (message->from->id)) {
+            std::cout << "User : " << message->from->id << " wrote " << message->text
+                      << std::endl;
+            if (StringTools::startsWith (message->text, "/start")) {
+                return;
+            }
+            _bot->getApi ().sendMessage (message->chat->id,
+                                         "Your message is: " + message->text);
+        } else {
+            send_wrong_auth_message (message->from->id);
         }
-        _bot->getApi ().sendMessage (message->chat->id,
-                                     "Your message is: " + message->text);
     });
 }
 
