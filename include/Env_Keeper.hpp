@@ -49,3 +49,4 @@ private:
 
 
 #endif //ECHOBOT_DEV_ENV_KEEPER_HPP
+
