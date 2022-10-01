@@ -99,6 +99,7 @@ void FlowBot::_initHandlers () {
         if (isAuthenticated (message->from->id)) {
             std::cout << "User : " << message->from->id << " wrote " << message->text
                       << std::endl;
+            //TODO: Check for commands!
             if (StringTools::startsWith (message->text, "/start")) {
                 return;
             }
