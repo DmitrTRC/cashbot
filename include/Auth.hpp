@@ -2,18 +2,19 @@
 // Created by Dmitry Morozov on 30/9/22.
 //
 
-#ifndef ECHOBOT_DEV_AUTH_HPP
-#define ECHOBOT_DEV_AUTH_HPP
+#ifndef CASHBOT_DEV_AUTH_HPP
+#define CASHBOT_DEV_AUTH_HPP
 
 
 template<typename T>
 class Auth {
     T f;
 public:
-    explicit Auth(T t){
+    explicit Auth (T t) {
         f = t;
     }
-    T& operator()(){
+
+    T &operator() () {
         return f;
     }
 };
@@ -31,4 +32,4 @@ public:
 //}
 
 
-#endif //ECHOBOT_DEV_AUTH_HPP
+#endif //CASHBOT_DEV_AUTH_HPP

@@ -2,8 +2,8 @@
 // Created by Dmitry Morozov on 24/9/22.
 //
 
-#ifndef ECHOBOT_DEV_ENV_KEEPER_HPP
-#define ECHOBOT_DEV_ENV_KEEPER_HPP
+#ifndef CASHBOT_DEV_ENV_KEEPER_HPP
+#define CASHBOT_DEV_ENV_KEEPER_HPP
 
 #include <string>
 #include <map>
@@ -48,5 +48,5 @@ private:
 };
 
 
-#endif //ECHOBOT_DEV_ENV_KEEPER_HPP
+#endif //CASHBOT_DEV_ENV_KEEPER_HPP
 

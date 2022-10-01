@@ -2,8 +2,8 @@
 // Created by Dmitry Morozov on 1/10/22.
 //
 
-#ifndef ECHOBOT_DEV_HELPER_HPP
-#define ECHOBOT_DEV_HELPER_HPP
+#ifndef CASHBOT_DEV_HELPER_HPP
+#define CASHBOT_DEV_HELPER_HPP
 
 #include <string>
 #include <initializer_list>
@@ -11,7 +11,7 @@
 
 
 namespace Helper {
-    const std::initializer_list<std::string> onHelp =  {"start", "help"};
+    const std::initializer_list<std::string> onHelp = {"start", "help"};
 
     constexpr auto helpMessage = "CashFlow Bot\n\n"
                                   "Add expenses: 25000 Medical_Service\n"
@@ -30,4 +30,4 @@ namespace Helper {
 
     };
 }
-#endif //ECHOBOT_DEV_HELPER_HPP
+#endif //CASHBOT_DEV_HELPER_HPP

@@ -2,8 +2,8 @@
 // Created by Dmitry Morozov on 24/9/22.
 //
 
-#ifndef ECHOBOT_DEV_FLOW_BOT_HPP
-#define ECHOBOT_DEV_FLOW_BOT_HPP
+#ifndef CASHBOT_DEV_FLOW_BOT_HPP
+#define CASHBOT_DEV_FLOW_BOT_HPP
 
 #include <tgbot/tgbot.h>
 
@@ -39,4 +39,4 @@ private:
 };
 
 
-#endif //ECHOBOT_DEV_FLOW_BOT_HPP
+#endif //CASHBOT_DEV_FLOW_BOT_HPP
