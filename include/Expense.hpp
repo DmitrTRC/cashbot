@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <string>
 
+#include "db_structure.hpp"
 
 namespace Expense {
 
@@ -17,21 +18,14 @@ namespace Expense {
         std::string category;
     };
 
-    //New DB record
-    struct Expense {
-        long id;
-        long user_id;
-        long amount;
-        std::string category;
-    };
 
-    Expense addExpense (const std::string &message);
+    DB::Expense addExpense (const std::string &message);
 
     std::string get_today_stat ();
 
     std::string get_month_stat ();
 
-    std::vector<Expense> getLast ();
+    std::vector<DB::Expense> getLast ();
 
     void deleteExpense (const long &id);
 

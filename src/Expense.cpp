@@ -7,9 +7,9 @@
 
 namespace Expense {
 
-    Expense addExpense (const std::string &message) {
+    DB::Expense addExpense (const std::string &message) {
         Message parsed_message = _ParseMessage (message);
-        Expense expense = {
+        DB::Expense expense = {
                 .id = 0,
                 .user_id = 0,
                 .amount = parsed_message.amount,
@@ -40,7 +40,7 @@ namespace Expense {
         struct tm *now_tm = localtime (&now_time);
         char date[20];
         strftime (date, 20, "%Y-%m-%d", now_tm);
-        return std::string (date);
+        return {date};
 
     }
 
