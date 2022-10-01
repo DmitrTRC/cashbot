@@ -93,16 +93,21 @@ void FlowBot::_initHandlers () {
         }
     });
 
-    //TODO: Filter /help,  ... commands
+
     _bot->getEvents ().onAnyMessage ([ & ] (const TgBot::Message::Ptr &message) {
 
         if (isAuthenticated (message->from->id)) {
             std::cout << "User : " << message->from->id << " wrote " << message->text
                       << std::endl;
-            //TODO: Check for commands!
-            if (StringTools::startsWith (message->text, "/start")) {
+
+
+            if (std::any_of (Helper::_bot_commands.begin (), Helper::_bot_commands.end (), [ &message ] (
+                    std::pair<std::string_view, std::string_view> command) {
+                return message->text.find (command.first) != std::string::npos;
+            })) {
                 return;
             }
+
             _bot->getApi ().sendMessage (message->chat->id,
                                          "Your message is: " + message->text);
         } else {
@@ -131,7 +136,7 @@ void FlowBot::_set_bot_commands () {
     std::vector<TgBot::BotCommand::Ptr> commands;
 
     for (auto &[newCommand, commandDescription]: Helper::_bot_commands) {
-        auto bot_command = std::make_shared<TgBot::BotCommand>();
+        auto bot_command = std::make_shared<TgBot::BotCommand> ();
         bot_command->command = newCommand;
         bot_command->description = commandDescription;
         commands.push_back (bot_command);
