@@ -34,7 +34,8 @@ include(FetchContent)
 FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
 FetchContent_MakeAvailable(json)
 
-
+FetchContent_Declare(sqlite URL https://github.com/fnc12/sqlite_orm/archive/refs/heads/master.zip)
+FetchContent_MakeAvailable(sqlite)
 ### Build executable
 
 set(SOURCES
@@ -59,4 +60,6 @@ target_link_libraries(cash_bot TgBot
         ${OPENSSL_LIBRARIES}
         ${Boost_LIBRARIES}
         ${CURL_LIBRARIES}
-        nlohmann_json::nlohmann_json)
+        nlohmann_json::nlohmann_json
+        sqlite_orm::sqlite_orm
+        )
