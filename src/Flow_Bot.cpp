@@ -7,8 +7,8 @@
 #include "Flow_Bot.hpp"
 #include "Helper.hpp"
 
-#include <initializer_list>
 #include <iostream>
+#include <memory>
 
 
 FlowBot::FlowBot () {
@@ -20,7 +20,7 @@ FlowBot::FlowBot () {
     }
 
     _bot = new TgBot::Bot (_env_keeper.get_Token ());
-
+    _set_bot_commands ();
     _initHandlers ();
 }
 
@@ -124,6 +124,20 @@ bool FlowBot::isAuthenticated (const long long &user_id) {
 
 void FlowBot::send_wrong_auth_message (const long long &user_id) {
     _bot->getApi ().sendMessage (user_id, "You are not authenticated");
+}
+
+void FlowBot::_set_bot_commands () {
+    std::vector<TgBot::BotCommand::Ptr> commands;
+
+    for (auto &[newCommand, commandDescription]: Helper::_bot_commands) {
+        auto bot_command = std::make_shared<TgBot::BotCommand>();
+        bot_command->command = newCommand;
+        bot_command->description = commandDescription;
+        commands.push_back (bot_command);
+    }
+
+
+    _bot->getApi ().setMyCommands (commands);
 }
 
 

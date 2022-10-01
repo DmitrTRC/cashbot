@@ -34,6 +34,8 @@ private:
     bool isAuthenticated (const long long &user_id);
 
     void send_wrong_auth_message (const long long &user_id);
+
+    void _set_bot_commands ();
 };
 
 
