@@ -40,6 +40,7 @@ FetchContent_MakeAvailable(json)
 set(SOURCES
         src/main.cpp
         src/Env_Keeper.cpp
+        src/Expense.cpp
         src/Flow_Bot.cpp
         src/Auth.cpp)
 

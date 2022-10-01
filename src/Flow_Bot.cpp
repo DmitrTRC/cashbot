@@ -4,6 +4,7 @@
 
 #include <tgbot/tgbot.h>
 
+#include "Expense.hpp"
 #include "Flow_Bot.hpp"
 #include "Helper.hpp"
 
@@ -100,7 +101,7 @@ void FlowBot::_initHandlers () {
             std::cout << "User : " << message->from->id << " wrote " << message->text
                       << std::endl;
 
-
+// Check if the message is a command
             if (std::any_of (Helper::_bot_commands.begin (), Helper::_bot_commands.end (), [ &message ] (
                     std::pair<std::string_view, std::string_view> command) {
                 return message->text.find (command.first) != std::string::npos;
@@ -109,7 +110,18 @@ void FlowBot::_initHandlers () {
             }
 
             _bot->getApi ().sendMessage (message->chat->id,
-                                         "Your message is: " + message->text);
+                                         "Your message is: " + message->text); // Debug only!
+
+            //Main part for add expense
+            try {
+                auto expense = Expense::addExpense (message->text);
+            } catch (std::exception &e) {
+                _bot->getApi ().sendMessage (message->chat->id,
+                                             "Wrong format");
+                return;
+            }
+
+
         } else {
             send_wrong_auth_message (message->from->id);
         }
