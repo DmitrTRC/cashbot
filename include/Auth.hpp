@@ -19,17 +19,12 @@ public:
     }
 };
 
-
-//int add(int a, int b)
-//{
-//    return a+b;
-//}
-//
-//void testing()
-//{
-//    Functor<int (*)(int, int)> f(add);
-//    cout << f()(2,3);
-//}
-
+///Use class Auth to wrap function
+void ifAuth () {
+    Auth auth = Auth ([] () {
+        return 1;
+    });
+    auth ();
+}
 
 #endif //CASHBOT_DEV_AUTH_HPP

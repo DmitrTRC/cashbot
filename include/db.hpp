@@ -17,20 +17,17 @@
 
 constexpr auto DB_PATH = "../db/cashbot.db";
 
-
+//TODO: Need to be Atomic
 class botDB {
 public:
     botDB ();
 
     ~botDB ();
 
-    void insertExpense (const DB::Expense &expense);
+    ///Insert Row in any table
+    void insertRow (const std::string &table, const std::map<std::string, std::string> &);
 
-    void insertCategory (const DB::Category &category);
-
-    void insertBudget (const DB::Budget &budget);
-
-    void deleteExpense (const long &id);
+    void deleteRow (std::string &table, const long &id);
 
     DB::Expenses fetchAllExpenses ();
 
