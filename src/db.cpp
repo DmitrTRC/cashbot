@@ -34,4 +34,21 @@ void botDB::_closeDB () {
     sqlite3_close (_bot_db);
 }
 
+DB::Expenses botDB::fetchAllExpenses () {
+    DB::Expenses expenses;
+    std::string sql = "SELECT * FROM expenses";
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2 (_bot_db, sql.c_str (), -1, &stmt, nullptr);
+    while (sqlite3_step (stmt) == SQLITE_ROW) {
+        DB::Expense expense;
+        expense.id = sqlite3_column_int (stmt, 0);
+        expense.user_id = sqlite3_column_int (stmt, 1);
+        expense.amount = sqlite3_column_int (stmt, 2);
+        expense.category = std::string ((char *) sqlite3_column_text (stmt, 3));
+        expenses.push_back (expense);
+    }
+    sqlite3_finalize (stmt);
+    return expenses;
+
+}
 

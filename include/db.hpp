@@ -32,7 +32,7 @@ public:
 
     void deleteExpense (const long &id);
 
-    std::vector<std::tuple<long, long, long, std::string>> fetchExpenses ();
+    DB::Expenses fetchAllExpenses ();
 
     std::vector<std::tuple<std::string, std::string, bool, std::string>> fetchCategories ();
 
@@ -45,6 +45,7 @@ private:
     static sqlite3 *_openDB ();
 
     void _closeDB ();
+
 
 };
 

@@ -18,6 +18,7 @@ namespace DB {
         long amount;
         std::string category;
     };
+    using Expenses = std::vector<Expense>;
 
     struct Category {
         std::string codename;
@@ -26,10 +27,14 @@ namespace DB {
         std::vector<std::string> aliases;
     };
 
+    using Categories = std::vector<Category>;
+
     struct Budget {
         std::string codename;
         long daily_limit;
     };
+
+    using Budgets = std::vector<Budget>;
 
 }
 
