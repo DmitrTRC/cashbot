@@ -4,7 +4,7 @@
 
 #include "db.hpp"
 
-#include <boost/algorithm/string/join.hpp>
+#include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <map>
 #include <vector>
@@ -102,12 +102,44 @@ void botDB::_check_db_exists () {
 
 }
 
-///Run the script DB_PATH/createdb.sql
+///Init all tables in DB
 void botDB::_initDB () {
-    std::string path = DB_PATH + std::string ("/createdb.sql");
-    auto qslInitScript = std::ifstream (path);
+    std::cout << "Init DB" << std::endl;
 
-    sqlite3_exec (_bot_db, qslInitScript.str ().c_str (), nullptr, nullptr, nullptr);
+    std::string sql = "CREATE TABLE expenses ("
+                      "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                      "user_id INTEGER,"
+                      "amount INTEGER,"
+                      "category TEXT"
+                      ");";
+    char *zErrMsg = 0;
+    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, 0, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        sqlite3_free (zErrMsg);
+    }
+    sql = "CREATE TABLE categories ("
+          "codename TEXT PRIMARY KEY,"
+          "name TEXT,"
+          "is_base_expense INTEGER,"
+          "aliases TEXT"
+          ");";
+    rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, 0, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        sqlite3_free (zErrMsg);
+    }
+    sql = "CREATE TABLE budgets ("
+          "codename TEXT PRIMARY KEY,"
+          "daily_limit INTEGER"
+          ");";
+    rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, 0, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        sqlite3_free (zErrMsg);
+    }
+
+    std::cout << "Init DB done" << std::endl;
 
 }
 
