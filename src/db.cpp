@@ -4,11 +4,11 @@
 
 #include "db.hpp"
 
-#include <boost/algorithm/string.hpp>
+//#include <boost/algorithm/string.hpp>
 #include <iostream>
 #include <map>
 #include <vector>
-#include <fstream>
+
 
 
 botDB::botDB () {
@@ -63,7 +63,7 @@ void botDB::_initDB () {
 
     char *zErrMsg = nullptr;
 
-    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, 0, &zErrMsg);
+    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
         sqlite3_free (zErrMsg);
@@ -74,7 +74,7 @@ void botDB::_initDB () {
           "is_base_expense INTEGER,"
           "aliases TEXT"
           ");";
-    rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, 0, &zErrMsg);
+    rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
         sqlite3_free (zErrMsg);
@@ -83,7 +83,7 @@ void botDB::_initDB () {
           "codename TEXT PRIMARY KEY,"
           "daily_limit INTEGER"
           ");";
-    rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, 0, &zErrMsg);
+    rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
         sqlite3_free (zErrMsg);
@@ -96,7 +96,7 @@ void botDB::_initDB () {
 void botDB::deleteRow (std::string &table, const long &id) {
     std::string sql = "DELETE FROM " + table + " WHERE id = " + std::to_string (id);
     char *zErrMsg = nullptr;
-    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, 0, &zErrMsg);
+    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
         sqlite3_free (zErrMsg);
@@ -120,7 +120,7 @@ void botDB::insertRow (const std::string &table, const std::map<std::string, std
     sql.pop_back ();
     sql += ");";
     char *zErrMsg = nullptr;
-    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, 0, &zErrMsg);
+    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
         sqlite3_free (zErrMsg);
