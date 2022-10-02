@@ -8,12 +8,51 @@
 
 #include "db_structure.hpp"
 
-#include <sqlite_orm/sqlite_orm.h>
-#include <string>
+#include <boost/algorithm/string/join.hpp>
 #include <iostream>
+#include <map>
+#include <string>
+#include <sqlite3.h>
 
 
-using namespace sqlite_orm;
+constexpr auto DB_PATH = "../db/cashbot.db";
+
+
+class botDB {
+public:
+    botDB ();
+
+    ~botDB ();
+
+    void insertExpense (const DB::Expense &expense);
+
+    void insertCategory (const DB::Category &category);
+
+    void insertBudget (const DB::Budget &budget);
+
+    void deleteExpense (const long &id);
+
+    std::vector<std::tuple<long, long, long, std::string>> fetchExpenses ();
+
+    std::vector<std::tuple<std::string, std::string, bool, std::string>> fetchCategories ();
+
+    std::vector<std::tuple<std::string, long>> fetchBudgets ();
+
+private:
+
+    sqlite3 *_bot_db;
+
+    static sqlite3 *_openDB ();
+
+    void _closeDB ();
+
+};
+
+
+
+
+
+//using namespace sqlite_orm;
 
 
 #endif //CASHBOT_FEATURE_DB_DB_HPP
