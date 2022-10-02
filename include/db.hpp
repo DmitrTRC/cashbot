@@ -51,10 +51,4 @@ private:
 };
 
 
-
-
-
-//using namespace sqlite_orm;
-
-
 #endif //CASHBOT_FEATURE_DB_DB_HPP

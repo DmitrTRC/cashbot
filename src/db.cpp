@@ -13,6 +13,7 @@
 
 botDB::botDB () {
     _bot_db = _openDB ();
+    _check_db_exists ();
 }
 
 botDB::~botDB () {
