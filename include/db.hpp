@@ -34,9 +34,9 @@ public:
 
     DB::Expenses fetchAllExpenses ();
 
-    std::vector<std::tuple<std::string, std::string, bool, std::string>> fetchCategories ();
+    DB::Categories fetchCategories ();
 
-    std::vector<std::tuple<std::string, long>> fetchBudgets ();
+    DB::Budgets fetchBudgets ();
 
 private:
 
@@ -45,6 +45,10 @@ private:
     static sqlite3 *_openDB ();
 
     void _closeDB ();
+
+    void _initDB ();
+
+    void _check_db_exists ();
 
 
 };
