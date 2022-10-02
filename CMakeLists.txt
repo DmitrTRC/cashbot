@@ -40,6 +40,7 @@ FetchContent_MakeAvailable(sqlite)
 
 set(SOURCES
         src/main.cpp
+        src/Categories.cpp
         src/db.cpp
         src/Env_Keeper.cpp
         src/Expense.cpp
