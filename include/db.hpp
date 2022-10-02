@@ -29,11 +29,14 @@ public:
 
     void deleteRow (std::string &table, const long &id);
 
-    DB::Expenses fetchAllExpenses ();
+    ///Fetch all rows from any table
+    auto fetchAll (const std::string &table);
 
-    DB::Categories fetchCategories ();
-
-    DB::Budgets fetchBudgets ();
+//    DB::Expenses fetchAllExpenses ();
+//
+//    DB::Categories fetchCategories ();
+//
+//    DB::Budgets fetchBudgets ();
 
 private:
 

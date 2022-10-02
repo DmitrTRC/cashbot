@@ -10,7 +10,6 @@
 #include <vector>
 
 
-
 botDB::botDB () {
     _bot_db = _openDB ();
     _check_db_exists ();
@@ -126,5 +125,28 @@ void botDB::insertRow (const std::string &table, const std::map<std::string, std
         sqlite3_free (zErrMsg);
     }
 
+}
+
+auto botDB::fetchAll (const std::string &table) {
+
+    std::string sql = "SELECT * FROM " + table;
+    sqlite3_stmt *stmt;
+
+    sqlite3_prepare_v2 (_bot_db, sql.c_str (), -1, &stmt, nullptr);
+    std::vector<std::map<std::string, std::string>> result;
+
+    while (sqlite3_step (stmt) == SQLITE_ROW) {
+        std::map<std::string, std::string> row;
+
+        for (int i = 0; i < sqlite3_column_count (stmt); i++) {
+            row[sqlite3_column_name (stmt, i)] = std::string ((char *) sqlite3_column_text (stmt, i));
+        }
+
+        result.push_back (row);
+    }
+
+    sqlite3_finalize (stmt);
+
+    return result;
 }
 
