@@ -30,13 +30,8 @@ public:
     void deleteRow (std::string &table, const long &id);
 
     ///Fetch all rows from any table
-    auto fetchAll (const std::string &table);
+    auto fetchAll (const std::string &table, const std::vector<std::string> & = {"*"});
 
-//    DB::Expenses fetchAllExpenses ();
-//
-//    DB::Categories fetchCategories ();
-//
-//    DB::Budgets fetchBudgets ();
 
 private:
 
@@ -49,7 +44,6 @@ private:
     void _initDB ();
 
     void _check_db_exists ();
-
 
 };
 

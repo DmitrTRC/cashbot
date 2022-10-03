@@ -4,6 +4,8 @@
 
 #include "Categories.hpp"
 
+#include <boost/algorithm/string.hpp>
+
 
 DB::TCategories Categories::getAllCategories () {
     return _categories;
@@ -35,26 +37,24 @@ DB::Category Categories::getCategory (const std::string &categoryName) {
     return resultCategory;
 }
 
-DB::TCategories Categories::_fill_aliases (std::vector<std::map<std::string, std::string>> &) {
-    DB::TCategories categories_result;
 
-    size_t index = 0;
-    //FIXME: Wrong logic
-//    for (auto &category: _categories) {
-//        std::vector<std::string> aliases;
-//        for (auto &alias: _categories[index].aliases) {
-//            aliases.push_back (alias);
-//        }
-//        categories_result.push_back (DB::Category {
-//                .codename = category.codename,
-//                .name = category.name,
-//                .is_base_expense = category.is_base_expense,
-//                .aliases = aliases
-//        });
-//        index++;
-//    }
+DB::TCategories Categories::_fill_aliases (std::vector<std::map<std::string, std::string>> &categories) {
+    DB::TCategories resultCategories;
 
-    return categories_result;
+    for (auto &category: categories) {
+        std::vector<std::string> aliases;
+        boost::split (aliases, category["aliases"], boost::is_any_of (","));
+        aliases.push_back (category["codename"]);
+        aliases.push_back (category["name"]);
+        resultCategories.push_back (DB::Category{
+                .codename = category["codename"],
+                .name = category["name"],
+                .is_base_expense = category["is_base_expense"] == "1",
+                .aliases = aliases
+        });
+    }
+
+    return resultCategories;
+
 }
-
 

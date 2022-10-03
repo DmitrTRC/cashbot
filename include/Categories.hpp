@@ -22,7 +22,7 @@ public:
 
     DB::Category getCategory (const std::string &);
 
-    DB::TCategories _fill_aliases (std::vector<std::map<std::string, std::string>> &);
+    static DB::TCategories _fill_aliases (std::vector<std::map<std::string, std::string>> &categories);
 
 private:
     DB::TCategories _categories;
