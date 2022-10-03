@@ -3,6 +3,7 @@
 //
 
 #include "Categories.hpp"
+#include "db.hpp"
 
 #include <boost/algorithm/string.hpp>
 
@@ -54,6 +55,21 @@ DB::TCategories Categories::_fill_aliases (std::vector<std::map<std::string, std
     }
 
     return resultCategories;
+
+}
+
+DB::TCategories Categories::_getCategoriesFromDB () {
+    std::vector<std::string> columns = {"codename", "name", "is_base_expense", "aliases"};
+    std::string query_name = "category";
+    std::vector<std::map<std::string, std::string >> categories = _db_handler->fetchAll (query_name, columns);
+    auto result = _fill_aliases (categories);
+
+
+}
+
+Categories::Categories (botDB *db) {
+    _db_handler = db;
+    _categories = _getCategoriesFromDB ();
 
 }
 

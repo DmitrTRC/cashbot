@@ -7,7 +7,9 @@
 
 #include <tgbot/tgbot.h>
 
+
 #include "Env_Keeper.hpp"
+#include "db.hpp"
 
 
 class FlowBot {
@@ -26,6 +28,8 @@ private:
     bool _is_running;
     EnvKeeper _env_keeper;
     TgBot::Bot *_bot;
+
+    botDB _db_handler;
 
     void _initHandlers ();
 

@@ -127,7 +127,8 @@ void botDB::insertRow (const std::string &table, const std::map<std::string, std
 
 }
 
-auto botDB::fetchAll (const std::string &table, const std::vector<std::string> &columns) -> auto {
+std::vector<std::map<std::string, std::string >>
+botDB::fetchAll (const std::string &table, const std::vector<std::string> &columns) {
     std::string sql = "SELECT ";
     for (auto &it: columns) {
         sql += it + ", ";

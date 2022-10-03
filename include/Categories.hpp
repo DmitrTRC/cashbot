@@ -5,6 +5,7 @@
 #ifndef CASHBOT_FEATURE_DB_CATEGORIES_HPP
 #define CASHBOT_FEATURE_DB_CATEGORIES_HPP
 
+#include "db.hpp"
 #include "db_structure.hpp"
 
 #include <vector>
@@ -14,7 +15,7 @@
 
 class Categories {
 public:
-    Categories ();
+    explicit Categories (botDB *db);
 
     ~Categories ();
 
@@ -22,10 +23,15 @@ public:
 
     DB::Category getCategory (const std::string &);
 
-    static DB::TCategories _fill_aliases (std::vector<std::map<std::string, std::string>> &categories);
 
 private:
+    botDB *_db_handler;
+
     DB::TCategories _categories;
+
+    static DB::TCategories _fill_aliases (std::vector<std::map<std::string, std::string>> &categories);
+
+    DB::TCategories _getCategoriesFromDB ();
 
 
 };

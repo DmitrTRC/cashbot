@@ -30,7 +30,8 @@ public:
     void deleteRow (std::string &table, const long &id);
 
     ///Fetch all rows from any table
-    auto fetchAll (const std::string &table, const std::vector<std::string> & = {"*"});
+    std::vector<std::map<std::string, std::string >>
+    fetchAll (const std::string &table, const std::vector<std::string> &);
 
 
 private:
