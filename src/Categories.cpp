@@ -23,8 +23,7 @@ DB::Category Categories::getCategory (const std::string &categoryName) {
         }
 
         for (auto &alias: category.aliases) {
-            if (std::find (category.aliases.begin (), category.aliases.end (), categoryName) !=
-                category.aliases.end ()) {
+            if (alias.find (categoryName) != std::string::npos) {
                 resultCategory = category;
             }
 
