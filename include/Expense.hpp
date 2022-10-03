@@ -19,21 +19,21 @@ namespace Expense {
     };
 
 
-    DB::Expense addExpense (const std::string &message);
+    DB::Expense addExpense(const std::string &message);
 
-    std::string get_today_stat ();
+    std::string get_today_stat();
 
-    std::string get_month_stat ();
+    std::string get_month_stat();
 
-    std::vector<DB::Expense> getLast ();
+    std::vector<DB::Expense> getLast();
 
-    void deleteExpense (const long &id);
+    void deleteExpense(const long &id);
 
-    Message _ParseMessage (const std::string &message);
+    Message ParseMsg(const std::string &message);
 
-    std::string _get_date_to_string ();
+    std::string _get_date_to_string();
 
-    long getBudgetLimit ();
+    long getBudgetLimit();
 
 
 } // Expense

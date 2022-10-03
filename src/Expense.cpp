@@ -7,8 +7,9 @@
 
 namespace Expense {
 
-    DB::Expense addExpense (const std::string &message) {
-        Message parsed_message = _ParseMessage (message);
+    DB::Expense addExpense(const std::string &message) {
+
+        Message parsed_message = ParseMsg(message);
         DB::Expense expense = {
                 .id = 0,
                 .user_id = 0,
@@ -19,16 +20,19 @@ namespace Expense {
         return expense;
     }
 
-    std::string get_today_stat () {
+    std::string get_today_stat() {
+
         return "Today stat";
     }
 
-    std::string get_month_stat () {
+    std::string get_month_stat() {
+
         return "Month stat";
     }
 
 
-    Message _ParseMessage (const std::string &message) {
+    Message ParseMsg(const std::string &message) {
+
         Message parsed_message;
         parsed_message.amount = 0;
         parsed_message.category = "Category";
@@ -36,16 +40,18 @@ namespace Expense {
     }
 
     ///Converts current date to string
-    std::string _get_Date_To_String (time_t now_time) {
-        struct tm *now_tm = localtime (&now_time);
+    std::string _get_Date_To_String(time_t now_time) {
+
+        struct tm *now_tm = localtime(&now_time);
         char date[20];
-        strftime (date, 20, "%Y-%m-%d", now_tm);
+        strftime(date, 20, "%Y-%m-%d", now_tm);
         return {date};
 
     }
 
 
-    long getBudgetLimit () {
+    long getBudgetLimit() {
+
         return 0;
     }
 

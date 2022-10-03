@@ -20,31 +20,31 @@ constexpr auto DB_PATH = "../db/cashbot.db";
 //TODO: Need to be Atomic
 class botDB {
 public:
-    botDB ();
+    botDB();
 
-    ~botDB ();
+    ~botDB();
 
     ///Insert Row in any table
-    void insertRow (const std::string &table, const std::map<std::string, std::string> &);
+    void insertRow(const std::string &table, const std::map<std::string, std::string> &);
 
-    void deleteRow (std::string &table, const long &id);
+    void deleteRow(std::string &table, const long &id);
 
     ///Fetch all rows from any table
     std::vector<std::map<std::string, std::string >>
-    fetchAll (const std::string &table, const std::vector<std::string> &);
+    fetchAll(const std::string &table, const std::vector<std::string> &);
 
 
 private:
 
     sqlite3 *_bot_db;
 
-    static sqlite3 *_openDB ();
+    static sqlite3 *_openDB();
 
-    void _closeDB ();
+    void _closeDB();
 
-    void _initDB ();
+    void _initDB();
 
-    void _check_db_exists ();
+    void _check_db_exists();
 
 };
 
