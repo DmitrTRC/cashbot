@@ -21,8 +21,6 @@ if (CURL_FOUND)
     add_definitions(-DHAVE_CURL)
 endif ()
 
-add_subdirectory(lib/tgbot-cpp) # Telegram API
-
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 message(STATUS "cash_bot Output directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
@@ -66,4 +64,5 @@ target_link_libraries(cash_bot TgBot
                       ${Boost_LIBRARIES}
                       ${CURL_LIBRARIES}
                       nlohmann_json::nlohmann_json
+                      sqlite3
                       )
