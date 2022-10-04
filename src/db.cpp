@@ -52,10 +52,7 @@ bool botDB::_check_db_exists() {
     char *zErrMsg = nullptr;
 
     static auto callback = +[](void *inst, int argc, char **argv, char **azColName) -> int {
-        int i;
-
-
-        for (i = 0; i < argc; i++) {
+        for (int i = 0; i < argc; i++) {
 
             std::cout << i << " :  " << azColName[i] << " = " << (argv[i] ? argv[i] : "NULL") << std::endl;
         }
