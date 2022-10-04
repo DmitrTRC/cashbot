@@ -39,13 +39,13 @@ FetchContent_MakeAvailable(sqlite)
 ### Build executable
 
 set(SOURCES
-        src/main.cpp
-        src/Categories.cpp
-        src/db.cpp
-        src/Env_Keeper.cpp
-        src/Expense.cpp
-        src/Flow_Bot.cpp
-        src/Auth.cpp)
+    src/main.cpp
+    src/Categories.cpp
+    src/db.cpp
+    src/Env_Keeper.cpp
+    src/Expense.cpp
+    src/Flow_Bot.cpp
+    src/Auth.cpp)
 
 add_executable(
         cash_bot
@@ -53,15 +53,15 @@ add_executable(
 )
 
 target_include_directories(cash_bot
-        PRIVATE
-        ${PROJECT_SOURCE_DIR}/include
-        )
+                           PRIVATE
+                           ${PROJECT_SOURCE_DIR}/include
+                           )
 
 target_link_libraries(cash_bot TgBot
-        ${CMAKE_THREAD_LIBS_INIT}
-        ${OPENSSL_LIBRARIES}
-        ${Boost_LIBRARIES}
-        ${CURL_LIBRARIES}
-        nlohmann_json::nlohmann_json
-        sqlite_orm::sqlite_orm
-        )
+                      ${CMAKE_THREAD_LIBS_INIT}
+                      ${OPENSSL_LIBRARIES}
+                      ${Boost_LIBRARIES}
+                      ${CURL_LIBRARIES}
+                      nlohmann_json::nlohmann_json
+                      sqlite_orm::sqlite_orm
+                      )

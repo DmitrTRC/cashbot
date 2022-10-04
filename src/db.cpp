@@ -10,144 +10,190 @@
 #include <vector>
 
 
-botDB::botDB () {
-    _bot_db = _openDB ();
-    _check_db_exists ();
+botDB::botDB() {
+
+    _bot_db = _openDB();
+    if (!_check_db_exists()) {
+        std::cout << "DB not found, creating new one" << std::endl;
+        _initDB();
+    }
+
 }
 
-botDB::~botDB () {
-    _closeDB ();
+botDB::~botDB() {
+
+    _closeDB();
 }
 
-sqlite3 *botDB::_openDB () {
+sqlite3 *botDB::_openDB() {
+
     sqlite3 *db;
-    int rc = sqlite3_open (DB_PATH, &db);
+    int rc = sqlite3_open(DB_PATH, &db);
     if (rc) {
-        std::cerr << "Can't open database: " << sqlite3_errmsg (db) << std::endl;
-        sqlite3_close (db);
-        exit (1);
+        std::cerr << "Can't open database: " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_close(db);
+        exit(1);
     }
     return db;
 }
 
 
-void botDB::_closeDB () {
-    sqlite3_close (_bot_db);
+void botDB::_closeDB() {
+
+    sqlite3_close(_bot_db);
 }
 
 
 ///Checks DB structure by execute query to DB and call _initDB if DB is empty
-void botDB::_check_db_exists () {
-    std::string sql = "SELECT * FROM expenses";
-    sqlite3_stmt *stmt;
-    sqlite3_prepare_v2 (_bot_db, sql.c_str (), -1, &stmt, nullptr);
-    if (sqlite3_step (stmt) != SQLITE_ROW) {
-        std::cout << "DB is empty, creating tables" << std::endl;
-        _initDB ();
-    }
-    sqlite3_finalize (stmt);
+bool botDB::_check_db_exists() {
 
-}
-
-///Init all tables in DB
-void botDB::_initDB () {
-    std::cout << "Init DB" << std::endl;
-
-    std::string sql = "CREATE TABLE expenses ("
-                      "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                      "user_id INTEGER,"
-                      "amount INTEGER,"
-                      "category TEXT"
-                      ");";
+    std::string sql("SELECT name FROM sqlite_master WHERE type='table' AND name='expense';");
 
     char *zErrMsg = nullptr;
 
-    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
+    static auto callback = +[](void *inst, int argc, char **argv, char **azColName) -> int {
+        int i;
+
+
+        for (i = 0; i < argc; i++) {
+
+            std::cout << i << " :  " << azColName[i] << " = " << (argv[i] ? argv[i] : "NULL") << std::endl;
+        }
+        std::cout << "CHECK TABLE : DONE " << std::endl;
+        static_cast<botDB *> ( inst )->_call_state = true; // Set operation result flag
+        return 0;
+    };
+    _call_state = false;
+    int rc = sqlite3_exec(_bot_db, sql.c_str(),
+                          callback, this, &zErrMsg);
+
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
-        sqlite3_free (zErrMsg);
+        std::cout << "DB is empty, creating tables" << std::endl;
+
+        sqlite3_free(zErrMsg);
+        setCallState(false);
+
     }
-    sql = "CREATE TABLE categories ("
-          "codename TEXT PRIMARY KEY,"
-          "name TEXT,"
-          "is_base_expense INTEGER,"
-          "aliases TEXT"
-          ");";
-    rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
+
+    return getCallState();
+}
+
+///Init all tables in DB
+void botDB::_initDB() {
+
+    std::cout << "Init DB" << std::endl;
+
+    std::string sql = "create table budget("
+                      "codename varchar(255) primary key,"
+                      "  daily_limit integer );";
+
+    char *zErrMsg = nullptr;
+
+    int rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
-        sqlite3_free (zErrMsg);
+        sqlite3_free(zErrMsg);
     }
-    sql = "CREATE TABLE budgets ("
-          "codename TEXT PRIMARY KEY,"
-          "daily_limit INTEGER"
+    sql = "create table category("
+          "    codename varchar(255) primary key, "
+          "    name varchar(255), "
+          "    is_base_expense boolean, "
+          "    aliases text "
           ");";
-    rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
+    rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
-        sqlite3_free (zErrMsg);
+        sqlite3_free(zErrMsg);
+    }
+    sql = "create table expense("
+          "    id integer primary key, "
+          "    user_id integer default 641480282, "
+          "    amount integer, "
+          "    created datetime, "
+          "    category_codename integer, "
+          "    raw_text text, "
+          "    FOREIGN KEY(category_codename) REFERENCES category(codename) "
+          ");";
+    rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        sqlite3_free(zErrMsg);
     }
 
     std::cout << "Init DB done" << std::endl;
 
 }
 
-void botDB::deleteRow (std::string &table, const long &id) {
-    std::string sql = "DELETE FROM " + table + " WHERE id = " + std::to_string (id);
+void botDB::deleteRow(std::string &table, const long &id) {
+
+    std::string sql = "DELETE FROM " + table + " WHERE id = " + std::to_string(id);
     char *zErrMsg = nullptr;
-    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
+    int rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
-        sqlite3_free (zErrMsg);
+        sqlite3_free(zErrMsg);
     }
 
 }
 
 //TODO: Refactor "Values" to "Data"
-void botDB::insertRow (const std::string &table, const std::map<std::string, std::string> &values) {
+void botDB::insertRow(const std::string &table, const std::map<std::string, std::string> &values) {
+
     std::string sql = "INSERT INTO " + table + " (";
     for (auto &it: values) {
         sql += it.first + ", ";
     }
-    sql.pop_back ();
-    sql.pop_back ();
+    sql.pop_back();
+    sql.pop_back();
     sql += ") VALUES (";
     for (auto &it: values) {
         sql += it.second + ", ";
     }
-    sql.pop_back ();
-    sql.pop_back ();
+    sql.pop_back();
+    sql.pop_back();
     sql += ");";
     char *zErrMsg = nullptr;
-    int rc = sqlite3_exec (_bot_db, sql.c_str (), nullptr, nullptr, &zErrMsg);
+    int rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
         std::cerr << "SQL error: " << zErrMsg << std::endl;
-        sqlite3_free (zErrMsg);
+        sqlite3_free(zErrMsg);
     }
 
 }
 
 std::vector<std::map<std::string, std::string >>
-botDB::fetchAll (const std::string &table, const std::vector<std::string> &columns) {
+botDB::fetchAll(const std::string &table, const std::vector<std::string> &columns) {
+
     std::string sql = "SELECT ";
     for (auto &it: columns) {
         sql += it + ", ";
     }
-    sql.pop_back ();
-    sql.pop_back ();
+    sql.pop_back();
+    sql.pop_back();
     sql += " FROM " + table + ";";
     sqlite3_stmt *stmt;
-    sqlite3_prepare_v2 (_bot_db, sql.c_str (), -1, &stmt, nullptr);
+    sqlite3_prepare_v2(_bot_db, sql.c_str(), -1, &stmt, nullptr);
     std::vector<std::map<std::string, std::string>> result;
-    while (sqlite3_step (stmt) == SQLITE_ROW) {
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
         std::map<std::string, std::string> row;
-        for (int i = 0; i < columns.size (); i++) {
-            row[columns[i]] = std::string ((char *) sqlite3_column_text (stmt, i));
+        for (int i = 0; i < columns.size(); i++) {
+            row[columns[i]] = std::string((char *) sqlite3_column_text(stmt, i));
         }
-        result.push_back (row);
+        result.push_back(row);
     }
-    sqlite3_finalize (stmt);
+    sqlite3_finalize(stmt);
     return result;
 
+}
+
+bool botDB::getCallState() const {
+
+    return _call_state;
+}
+
+void botDB::setCallState(bool callState) {
+
+    _call_state = callState;
 }
 

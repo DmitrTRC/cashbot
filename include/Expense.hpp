@@ -18,7 +18,6 @@ namespace Expense {
         std::string category;
     };
 
-
     DB::Expense addExpense(const std::string &message);
 
     std::string get_today_stat();
@@ -34,7 +33,6 @@ namespace Expense {
     std::string _get_date_to_string();
 
     long getBudgetLimit();
-
 
 } // Expense
 

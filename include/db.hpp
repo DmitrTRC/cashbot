@@ -33,6 +33,10 @@ public:
     std::vector<std::map<std::string, std::string >>
     fetchAll(const std::string &table, const std::vector<std::string> &);
 
+    [[nodiscard]] bool getCallState() const;
+
+    void setCallState(bool callState);
+
 
 private:
 
@@ -44,7 +48,9 @@ private:
 
     void _initDB();
 
-    void _check_db_exists();
+    bool _check_db_exists();
+
+    bool _call_state = false;
 
 };
 
