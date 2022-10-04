@@ -36,6 +36,9 @@ FetchContent_MakeAvailable(json)
 
 FetchContent_Declare(sqlite URL https://github.com/fnc12/sqlite_orm/archive/refs/heads/master.zip)
 FetchContent_MakeAvailable(sqlite)
+
+FetchContent_Declare(tgbot URL https://github.com/reo7sp/tgbot-cpp/archive/refs/heads/master.zip)
+FetchContent_MakeAvailable(tgbot)
 ### Build executable
 
 set(SOURCES
@@ -63,5 +66,4 @@ target_link_libraries(cash_bot TgBot
                       ${Boost_LIBRARIES}
                       ${CURL_LIBRARIES}
                       nlohmann_json::nlohmann_json
-                      sqlite_orm::sqlite_orm
                       )
