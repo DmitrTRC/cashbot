@@ -16,6 +16,7 @@ botDB::botDB() {
     if (!_check_db_exists()) {
         std::cout << "DB not found, creating new one" << std::endl;
         _initDB();
+        _fill_test_tables();
     }
 
 }
@@ -192,5 +193,30 @@ bool botDB::getCallState() const {
 void botDB::setCallState(bool callState) {
 
     _call_state = callState;
+}
+
+void botDB::_fill_test_tables() {
+
+    std::string sql = "insert into category (codename, name, is_base_expense, aliases)  values \n"
+                      "('products', 'продукты', true, 'еда'), \n "
+                      "('coffee', 'кофе', true, ''), \n"
+                      "('dinner', 'обед', true, 'столовая, ланч, бизнес-ланч, бизнес ланч'); "
+
+                      "insert into budget (codename, daily_limit) values \n"
+                      "('default', 1000);"
+
+                      "insert into expense (amount, user_id, created,  category_codename, raw_text) values \n"
+                      "('100', '123456789', '2020-01-01',  'products', 'продукты'), \n"
+                      "('200', '234567891', '2020-01-01',  'coffee', 'кофе'), \n"
+                      "('300', '', '2022-03-06', 'dinner', 'обед');";
+
+    char *zErrMsg = nullptr;
+    int rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        sqlite3_free(zErrMsg);
+    }
+
+
 }
 
