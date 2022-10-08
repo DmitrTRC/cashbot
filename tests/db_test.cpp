@@ -8,13 +8,12 @@
 TEST(DBTest, TestDB) {
 
 
-    DB::Expense expense;
     botDB db;
 
-    EXPECT_EQ(db.getCallState(), false);
-
-    db.setCallState(true);
-
     EXPECT_EQ(db.getCallState(), true);
+
+    db.setCallState(false);
+
+    EXPECT_EQ(db.getCallState(), false);
 
 }

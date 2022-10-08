@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.23)
 project(bot_lib)
 
-SET(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wall")
 
@@ -73,7 +73,7 @@ target_link_libraries(bot_lib
 
 add_executable(
         bot_binary
-        src/main.cpp
+        App/main.cpp
 )
 
 
@@ -81,37 +81,37 @@ target_link_libraries(bot_binary PRIVATE
                       bot_lib)
 
 ######### TEST SECTION ###########
-#
-#include(FetchContent)
-#FetchContent_Declare(
-#        googletest
-#        GIT_REPOSITORY https://github.com/google/googletest.git
-#        GIT_TAG release-1.12.1
-#)
-## For Windows: Prevent overriding the parent project's compiler/linker settings
-#set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-#
-#FetchContent_MakeAvailable(googletest)
-#
-#### Add Tests
-#
-#enable_testing()
-#include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-#
-#
-#add_executable(bot_test
-#               tests/db_test.cpp
-#               )
-#
-#target_include_directories(bot_test PRIVATE
-#                           ${CMAKE_SOURCE_DIR}/src
-#                           )
-#
-#target_link_libraries(bot_test
-#                      sqlite3
-#                      GTest::gtest_main
-#                      )
-#
-#include(GoogleTest)
-#gtest_discover_tests(bot_test)
+
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG release-1.12.1
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(googletest)
+
+### Add Tests
+
+enable_testing()
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+
+add_executable(bot_test
+               tests/db_test.cpp
+               )
+
+target_include_directories(bot_test PRIVATE
+                           ${CMAKE_SOURCE_DIR}/src
+                           )
+
+target_link_libraries(bot_test
+                      bot_lib
+                      GTest::gtest_main
+                      )
+
+include(GoogleTest)
+gtest_discover_tests(bot_test)
 
