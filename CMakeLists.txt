@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.23)
-project(cash_bot)
+project(bot_lib)
 
+SET(CMAKE_CXX_STANDARD 20)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wall")
 
@@ -13,7 +14,7 @@ find_package(OpenSSL REQUIRED)
 find_package(Boost COMPONENTS system REQUIRED)
 find_package(CURL)
 
-include_directories(/usr/local/include ${OPENSSL_ROOT_DIR}/include ${Boost_INCLUDE_DIR} src)
+include_directories(/usr/local/include ${OPENSSL_ROOT_DIR}/include ${Boost_INCLUDE_DIR})
 
 if (CURL_FOUND)
     include_directories(${CURL_INCLUDE_DIRS})
@@ -21,7 +22,7 @@ if (CURL_FOUND)
 endif ()
 
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 message(STATUS "cash_bot Output directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 
 
@@ -36,27 +37,28 @@ FetchContent_MakeAvailable(sqlite)
 
 FetchContent_Declare(tgbot URL https://github.com/reo7sp/tgbot-cpp/archive/refs/heads/master.zip)
 FetchContent_MakeAvailable(tgbot)
-### Build executable
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
+############################################################
+# Create a library
+############################################################
 
-add_executable(
-        cash_bot
-        src/main.cpp
-        src/Categories.cpp
-        src/db.cpp
-        src/Env_Keeper.cpp
-        src/Expense.cpp
-        src/Flow_Bot.cpp
-        src/Auth.cpp
-)
+#Generate the static library from the library sources
+add_library(bot_lib STATIC
+            src/Categories.cpp
+            src/db.cpp
+            src/Env_Keeper.cpp
+            src/Expense.cpp
+            src/Flow_Bot.cpp
+            )
 
-target_include_directories(cash_bot
-                           PRIVATE
+target_include_directories(bot_lib
+                           PUBLIC
                            ${PROJECT_SOURCE_DIR}/include
                            )
 
-target_link_libraries(cash_bot TgBot
+target_link_libraries(bot_lib
+                      PUBLIC
+                      TgBot
                       ${CMAKE_THREAD_LIBS_INIT}
                       ${OPENSSL_LIBRARIES}
                       ${Boost_LIBRARIES}
@@ -65,38 +67,51 @@ target_link_libraries(cash_bot TgBot
                       sqlite3
                       )
 
-######### TEST SECTION ###########
+############################################################
+# Create an executable
+############################################################
 
-include(FetchContent)
-FetchContent_Declare(
-        googletest
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG release-1.12.1
+add_executable(
+        bot_binary
+        src/main.cpp
 )
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
-FetchContent_MakeAvailable(googletest)
-
-### Add Tests
-
-enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 
-add_executable(bot_test
-               tests/db_test.cpp
-               )
+target_link_libraries(bot_binary PRIVATE
+                      bot_lib)
 
-target_include_directories(bot_test PRIVATE
-                           ${CMAKE_SOURCE_DIR}/src
-                           )
-
-target_link_libraries(bot_test
-                      sqlite3
-                      GTest::gtest_main
-                      )
-
-include(GoogleTest)
-gtest_discover_tests(bot_test)
+######### TEST SECTION ###########
+#
+#include(FetchContent)
+#FetchContent_Declare(
+#        googletest
+#        GIT_REPOSITORY https://github.com/google/googletest.git
+#        GIT_TAG release-1.12.1
+#)
+## For Windows: Prevent overriding the parent project's compiler/linker settings
+#set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+#
+#FetchContent_MakeAvailable(googletest)
+#
+#### Add Tests
+#
+#enable_testing()
+#include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+#
+#
+#add_executable(bot_test
+#               tests/db_test.cpp
+#               )
+#
+#target_include_directories(bot_test PRIVATE
+#                           ${CMAKE_SOURCE_DIR}/src
+#                           )
+#
+#target_link_libraries(bot_test
+#                      sqlite3
+#                      GTest::gtest_main
+#                      )
+#
+#include(GoogleTest)
+#gtest_discover_tests(bot_test)
 
