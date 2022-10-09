@@ -17,7 +17,7 @@ TEST(DBTest, TestDB) {
     EXPECT_EQ(db->getCallState(), true);
 
     db->setCallState(false);
-    
+
     EXPECT_EQ(db->getCallState(), false);
 
     db->setCallState(state);
@@ -71,7 +71,7 @@ TEST(DBTestInsert, TestDBInsertBudgetRow) {
     auto *db = new botDB();
 
     std::map<std::string, std::string> budget = {
-            {"codename",    "food"},
+            {"codename",    "Life"},
             {"daily_limit", "1000"}
     };
 
@@ -83,7 +83,7 @@ TEST(DBTestInsert, TestDBInsertBudgetRow) {
 
     EXPECT_EQ(result.size(), 1);
 
-    EXPECT_EQ(result[0]["codename"], "food");
+    EXPECT_EQ(result[0]["codename"], "Life");
 
     EXPECT_EQ(result[0]["daily_limit"], "1000");
 

@@ -145,9 +145,9 @@ void botDB::insertRow(const std::string &table, const std::map<std::string, std:
     }
     sql.pop_back();
     sql.pop_back();
-    sql += ") VALUES (";
+    sql += ") VALUES ('";
     for (auto &it: values) {
-        sql += it.second + ", ";
+        sql += it.second + "','";
     }
     sql.pop_back();
     sql.pop_back();
