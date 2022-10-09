@@ -4,16 +4,23 @@
 #include <gtest/gtest.h>
 
 #include "db.hpp"
+#include "db_structure.hpp"
 
 TEST(DBTest, TestDB) {
 
     auto *db = new botDB();
 
-    EXPECT_EQ(db->getCallState(), false);
+    auto state = db->getCallState();
 
     db->setCallState(true);
 
     EXPECT_EQ(db->getCallState(), true);
+
+    db->setCallState(false);
+    
+    EXPECT_EQ(db->getCallState(), false);
+
+    db->setCallState(state);
 
 }
 /**
@@ -27,34 +34,57 @@ TEST(DBTest, TestDB) {
           "    FOREIGN KEY(category_codename) REFERENCES category(codename) "
           ");";
           */
-TEST(DBTestInsert, TestDBInsertExpense) {
+//TEST(DBTestInsert, TestDBInsertExpenseRow) {
+//
+//    auto *db = new botDB();
+//
+//    std::map<std::string, std::string> expense = {
+//            {"user_id",           "641480282"},
+//            {"amount",            "100"},
+//            {"created",           "2021-08-10"},
+//            {"category_codename", "food"},
+//            {"raw_text",          "test"}
+//    };
+//
+//    db->insertRow("expense", expense);
+//
+//    std::vector<std::string> columns = {"id", "user_id", "amount", "created", "category_codename", "raw_text"};
+//
+//    auto result = db->fetchAll("expense", columns);
+//
+//    EXPECT_EQ(result.size(), 1);
+//
+//    EXPECT_EQ(result[0]["user_id"], "641480282");
+//
+//    EXPECT_EQ(result[0]["amount"], "100");
+//
+//    EXPECT_EQ(result[0]["created"], "2021-08-10 12:00:00");
+//
+//    EXPECT_EQ(result[0]["category_codename"], "food");
+//
+//    EXPECT_EQ(result[0]["raw_text"], "test");
+//
+//}
+
+TEST(DBTestInsert, TestDBInsertBudgetRow) {
 
     auto *db = new botDB();
 
-    std::map<std::string, std::string> expense = {
-            {"user_id",           "641480282"},
-            {"amount",            "100"},
-            {"created",           "2021-08-10"},
-            {"category_codename", "food"},
-            {"raw_text",          "test"}
+    std::map<std::string, std::string> budget = {
+            {"codename",    "food"},
+            {"daily_limit", "1000"}
     };
 
-    db->insertRow("expense", expense);
+    db->insertRow("budget", budget);
 
-    std::vector<std::string> columns = {"id", "user_id", "amount", "created", "category_codename", "raw_text"};
+    std::vector<std::string> columns = {"codename", "daily_limit"};
 
-    auto result = db->fetchAll("expense", columns);
+    auto result = db->fetchAll("budget", columns);
 
     EXPECT_EQ(result.size(), 1);
 
-    EXPECT_EQ(result[0]["user_id"], "641480282");
+    EXPECT_EQ(result[0]["codename"], "food");
 
-    EXPECT_EQ(result[0]["amount"], "100");
-
-    EXPECT_EQ(result[0]["created"], "2021-08-10 12:00:00");
-
-    EXPECT_EQ(result[0]["category_codename"], "food");
-
-    EXPECT_EQ(result[0]["raw_text"], "test");
+    EXPECT_EQ(result[0]["daily_limit"], "1000");
 
 }
