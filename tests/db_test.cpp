@@ -23,17 +23,7 @@ TEST(DBTest, TestDB) {
     db->setCallState(state);
 
 }
-/**
- sql = "create table expense("
-          "    id integer primary key, "
-          "    user_id integer default 641480282, "
-          "    amount integer, "
-          "    created datetime, "
-          "    category_codename integer, "
-          "    raw_text text, "
-          "    FOREIGN KEY(category_codename) REFERENCES category(codename) "
-          ");";
-          */
+
 TEST(DBTestInsert, TestDBInsertExpenseRow) {
 
     auto *db = new botDB();
