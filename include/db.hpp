@@ -20,7 +20,9 @@ constexpr auto DB_PATH = "../db/cashbot.db";
 //TODO: Need to be Atomic
 class botDB {
 public:
-    botDB();
+    botDB() : botDB(DB_PATH) {};
+
+    explicit botDB(const std::string &db_path);
 
     ~botDB();
 
@@ -40,14 +42,20 @@ public:
 
     void setCallState(bool callState);
 
-    static void deleteDB();
+    [[nodiscard]] std::string getDBPath() const;
+
+    void fill_test_tables();
+
+    void deleteDB();
 
 
 private:
 
     sqlite3 *_bot_db;
 
-    static sqlite3 *_openDB();
+    std::string _bot_db_path;
+
+    sqlite3 *_openDB();
 
     void _closeDB();
 
@@ -56,8 +64,6 @@ private:
     bool _check_db_exists();
 
     bool _call_state = false;
-
-    void _fill_test_tables();
 
 
 };

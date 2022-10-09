@@ -11,13 +11,14 @@
 #include <vector>
 
 
-botDB::botDB() {
+botDB::botDB(const std::string &db_path) {
 
+    _bot_db_path = db_path;
     _bot_db = _openDB();
     if (!_check_db_exists()) {
         std::cout << "DB not found, creating new one" << std::endl;
         _initDB();
-        //  _fill_test_tables();
+        //  fill_test_tables();
     }
 
 }
@@ -30,7 +31,7 @@ botDB::~botDB() {
 sqlite3 *botDB::_openDB() {
 
     sqlite3 *db;
-    int rc = sqlite3_open(DB_PATH, &db);
+    int rc = sqlite3_open(_bot_db_path.c_str(), &db);
     if (rc) {
         std::cerr << "Can't open database: " << sqlite3_errmsg(db) << std::endl;
         sqlite3_close(db);
@@ -196,7 +197,7 @@ void botDB::setCallState(bool callState) {
     _call_state = callState;
 }
 
-void botDB::_fill_test_tables() {
+void botDB::fill_test_tables() {
 
     std::string sql = "insert into category (codename, name, is_base_expense, aliases)  values \n"
                       "('products', 'продукты', true, 'еда'), \n "
@@ -224,7 +225,7 @@ void botDB::_fill_test_tables() {
 void botDB::deleteDB() {
 
     try {
-        std::filesystem::remove(DB_PATH);
+        std::filesystem::remove(_bot_db_path);
     } catch (std::filesystem::filesystem_error &e) {
         std::cerr << e.what() << std::endl;
     }
@@ -247,4 +248,10 @@ void botDB::clearDB() {
 
 
 }
+
+std::string botDB::getDBPath() const {
+
+    return _bot_db_path;
+}
+
 
