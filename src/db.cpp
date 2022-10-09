@@ -5,6 +5,7 @@
 #include "db.hpp"
 
 //#include <boost/algorithm/string.hpp>
+#include <filesystem>
 #include <iostream>
 #include <map>
 #include <vector>
@@ -16,7 +17,7 @@ botDB::botDB() {
     if (!_check_db_exists()) {
         std::cout << "DB not found, creating new one" << std::endl;
         _initDB();
-        _fill_test_tables();
+        //  _fill_test_tables();
     }
 
 }
@@ -66,7 +67,7 @@ bool botDB::_check_db_exists() {
                           callback, this, &zErrMsg);
 
     if (rc != SQLITE_OK) {
-        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        std::cerr << "SQL error from _check_DB_Exists : " << zErrMsg << std::endl;
         std::cout << "DB is empty, creating tables" << std::endl;
 
         sqlite3_free(zErrMsg);
@@ -115,7 +116,7 @@ void botDB::_initDB() {
           ");";
     rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        std::cerr << "SQL error from _InitDB : " << zErrMsg << std::endl;
         sqlite3_free(zErrMsg);
     }
 
@@ -129,7 +130,7 @@ void botDB::deleteRow(std::string &table, const long &id) {
     char *zErrMsg = nullptr;
     int rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        std::cerr << "SQL error from deleteRow : " << zErrMsg << std::endl;
         sqlite3_free(zErrMsg);
     }
 
@@ -154,7 +155,7 @@ void botDB::insertRow(const std::string &table, const std::map<std::string, std:
     char *zErrMsg = nullptr;
     int rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
     if (rc != SQLITE_OK) {
-        std::cerr << "SQL error: " << zErrMsg << std::endl;
+        std::cerr << "SQL error from InsertRow: " << zErrMsg << std::endl;
         sqlite3_free(zErrMsg);
     }
 
@@ -209,6 +210,33 @@ void botDB::_fill_test_tables() {
                       "('100', '123456789', '2020-01-01',  'products', 'продукты'), \n"
                       "('200', '234567891', '2020-01-01',  'coffee', 'кофе'), \n"
                       "('300', '', '2022-03-06', 'dinner', 'обед');";
+
+    char *zErrMsg = nullptr;
+    int rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        std::cerr << "SQL error from  fill_test_db : " << zErrMsg << std::endl;
+        sqlite3_free(zErrMsg);
+    }
+
+
+}
+
+void botDB::deleteDB() {
+
+    try {
+        std::filesystem::remove(DB_PATH);
+    } catch (std::filesystem::filesystem_error &e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+}
+
+
+void botDB::clearDB() {
+
+    std::string sql = "DELETE FROM expense; "
+                      "DELETE FROM category; "
+                      "DELETE FROM budget;";
 
     char *zErrMsg = nullptr;
     int rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);

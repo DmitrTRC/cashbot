@@ -29,6 +29,9 @@ public:
 
     void deleteRow(std::string &table, const long &id);
 
+    void clearDB();
+
+
     ///Fetch all rows from any table
     std::vector<std::map<std::string, std::string >>
     fetchAll(const std::string &table, const std::vector<std::string> &);
@@ -36,6 +39,8 @@ public:
     [[nodiscard]] bool getCallState() const;
 
     void setCallState(bool callState);
+
+    static void deleteDB();
 
 
 private:
@@ -53,6 +58,7 @@ private:
     bool _call_state = false;
 
     void _fill_test_tables();
+
 
 };
 

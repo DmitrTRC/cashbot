@@ -9,11 +9,11 @@ TEST(DBTest, TestDB) {
 
     auto *db = new botDB();
 
-    EXPECT_EQ(db->getCallState(), true);
-
-    db->setCallState(false);
-
     EXPECT_EQ(db->getCallState(), false);
+
+    db->setCallState(true);
+
+    EXPECT_EQ(db->getCallState(), true);
 
 }
 /**
