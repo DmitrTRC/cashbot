@@ -198,4 +198,6 @@ TEST(DB_TEST_DELETE, delete_db_file_test) {
 
     auto isDBFileExists = std::filesystem::exists("../db/cashbot_test.db");
 
+    EXPECT_EQ(isDBFileExists, false);
+
 }
