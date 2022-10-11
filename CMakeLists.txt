@@ -12,6 +12,7 @@ set(ENV{OPENSSL_ROOT_DIR} "/opt/homebrew/opt/openssl@3")
 find_package(Threads REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(Boost COMPONENTS system REQUIRED)
+find_package(sqlite3 REQUIRED)
 find_package(CURL)
 
 include_directories(/usr/local/include ${OPENSSL_ROOT_DIR}/include ${Boost_INCLUDE_DIR})
