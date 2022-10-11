@@ -10,7 +10,16 @@
 
 #include "db_structure.hpp"
 
-namespace Expense {
+class Expense {
+public:
+    Expense(long user_id, long amount, std::string category);
+
+    ~Expense();
+
+    DB::Expense getExpense();
+
+
+private:
 
     ///Parsed Expense message
     struct Message {
@@ -34,6 +43,6 @@ namespace Expense {
 
     long getBudgetLimit();
 
-} // Expense
+}; // Expense
 
 #endif //CASHBOT_DEV_EXPENSE_HPP

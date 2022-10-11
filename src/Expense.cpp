@@ -5,8 +5,6 @@
 #include "Expense.hpp"
 
 
-namespace Expense {
-
     DB::Expense addExpense(const std::string &message) {
 
         Message parsed_message = ParseMsg(message);
