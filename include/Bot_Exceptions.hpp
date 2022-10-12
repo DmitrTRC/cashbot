@@ -6,17 +6,19 @@
 #define CASHBOT_FEATURE_EXPENSE_BOT_EXCEPTIONS_HPP
 
 #include <exception>
+#include <string>
+#include <utility>
 
 class WrongMsgException : public std::exception {
 private:
-    char *message;
+    std::string message;
 
 public:
-    explicit WrongMsgException(char *msg) : message(msg) {}
+    explicit WrongMsgException(std::string msg) : message(std::move(msg)) {}
 
     [[nodiscard]] const char *what() const noexcept override {
 
-        return message;
+        return message.c_str();
     }
 };
 

@@ -37,7 +37,7 @@ public:
 private:
 
 
-    Message ParseMsg(const std::string &message);
+    static Message ParseMsg(const std::string &message);
 
     static std::string getDateToStr(time_t);
 
