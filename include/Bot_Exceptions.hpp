@@ -12,9 +12,9 @@ private:
     char *message;
 
 public:
-    WrongMsgException(char *msg) : message(msg) {}
+    explicit WrongMsgException(char *msg) : message(msg) {}
 
-    const char *what() const noexcept override {
+    [[nodiscard]] const char *what() const noexcept override {
 
         return message;
     }

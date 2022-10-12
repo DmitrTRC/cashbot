@@ -18,15 +18,6 @@ public:
 
     DB::Expense getExpense();
 
-
-private:
-
-    ///Parsed Expense message
-    struct Message {
-        long amount;
-        std::string category;
-    };
-
     DB::Expense addExpense(const std::string &message);
 
     std::string get_today_stat();
@@ -36,6 +27,15 @@ private:
     std::vector<DB::Expense> getLast();
 
     void deleteExpense(const long &id);
+
+private:
+
+    ///Parsed Expense message
+    struct Message {
+        long amount;
+        std::string category;
+    };
+
 
     Message ParseMsg(const std::string &message);
 
