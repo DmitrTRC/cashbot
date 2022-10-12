@@ -4,53 +4,40 @@
 
 #include "Expense.hpp"
 
+Expense::Expense() = default;
 
-    DB::Expense addExpense(const std::string &message) {
+Expense::~Expense() = default;
 
-        Message parsed_message = ParseMsg(message);
-        DB::Expense expense = {
-                .id = 0,
-                .user_id = 0,
-                .amount = parsed_message.amount,
-                .category = parsed_message.category
-        };
+DB::Expense Expense::addExpense(const std::string &message) {
 
-        return expense;
-    }
+    Message parsedMessage = ParseMsg(message);
 
-    std::string get_today_stat() {
+    DB::Expense expense = {
+            .id = 0,
+            .user_id = 0,
+            .amount = parsedMessage.amount,
+            .category = parsedMessage.category
+    };
 
-        return "Today stat";
-    }
-
-    std::string get_month_stat() {
-
-        return "Month stat";
-    }
+    return expense;
+}
 
 
-    Message ParseMsg(const std::string &message) {
+///Converts current date to string
+std::string Expense::getDateToStr(time_t now_time) {
 
-        Message parsed_message;
-        parsed_message.amount = 0;
-        parsed_message.category = "Category";
-        return parsed_message;
-    }
+    struct tm *now_tm = localtime(&now_time);
+    char date[20];
+    strftime(date, 20, "%Y-%m-%d", now_tm);
+    return {date};
 
-    ///Converts current date to string
-    std::string _get_Date_To_String(time_t now_time) {
+}
 
-        struct tm *now_tm = localtime(&now_time);
-        char date[20];
-        strftime(date, 20, "%Y-%m-%d", now_tm);
-        return {date};
+Message Expense::ParseMsg(const std::string &message) {
 
-    }
+    return Message();
+}
 
 
-    long getBudgetLimit() {
 
-        return 0;
-    }
 
-} // Expense

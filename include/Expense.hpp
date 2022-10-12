@@ -10,9 +10,15 @@
 
 #include "db_structure.hpp"
 
+///Parsed Expense message
+struct Message {
+    long amount;
+    std::string category;
+};
+
 class Expense {
 public:
-    Expense(long user_id, long amount, std::string category);
+    Expense();
 
     ~Expense();
 
@@ -30,16 +36,10 @@ public:
 
 private:
 
-    ///Parsed Expense message
-    struct Message {
-        long amount;
-        std::string category;
-    };
-
 
     Message ParseMsg(const std::string &message);
 
-    std::string _get_date_to_string();
+    static std::string getDateToStr(time_t);
 
     long getBudgetLimit();
 
