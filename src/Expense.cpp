@@ -3,6 +3,7 @@
 //
 
 #include "Bot_Exceptions.hpp"
+#include "Categories.hpp"
 #include "Expense.hpp"
 
 #include <regex>
@@ -15,11 +16,13 @@ DB::Expense Expense::addExpense(const std::string &message) {
 
     Message parsedMessage = ParseMsg(message);
 
+    DB::Category category = Categories::getCategory(parsedMessage.category_text);
+
     DB::Expense expense = {
             .id = 0,
             .user_id = 0,
             .amount = parsedMessage.amount,
-            .category = parsedMessage.category
+            .category = parsedMessage.category_text
     };
 
     return expense;
@@ -50,7 +53,7 @@ Message Expense::ParseMsg(const std::string &message) {
 
     Message resultMessage = {
             .amount = std::stol(match[1]),
-            .category = match[2]
+            .category_text = match[2]
     };
 
     return resultMessage;

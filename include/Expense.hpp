@@ -13,7 +13,7 @@
 ///Parsed Expense message
 struct Message {
     long amount;
-    std::string category;
+    std::string category_text;
 };
 
 class Expense {

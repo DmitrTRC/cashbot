@@ -10,6 +10,7 @@ create table category(
     aliases text
 );
 
+
 create table expense(
     id integer primary key,
     user_id integer default 641480282,

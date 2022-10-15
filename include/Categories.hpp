@@ -15,13 +15,13 @@
 
 class Categories {
 public:
-    explicit Categories (botDB *db);
+    explicit Categories(botDB *db);
 
-    ~Categories ();
+    ~Categories();
 
-    DB::TCategories getAllCategories ();
+    DB::TCategories getAllCategories();
 
-    DB::Category getCategory (const std::string &);
+    static DB::Category getCategory(const std::string &);
 
 
 private:
@@ -29,9 +29,9 @@ private:
 
     DB::TCategories _categories;
 
-    static DB::TCategories _fill_aliases (std::vector<std::map<std::string, std::string>> &categories);
+    static DB::TCategories _fill_aliases(std::vector<std::map<std::string, std::string>> &categories);
 
-    DB::TCategories _getCategoriesFromDB ();
+    DB::TCategories _getCategoriesFromDB();
 
 
 };
