@@ -39,7 +39,7 @@ void FlowBot::Start() {
 
             std::cout << "Long poll started" << std::endl;
             //Debug Only!
-            throw TgBot::TgException("The bot is stopped by tests");
+//            throw TgBot::TgException("The bot is stopped by tests");
 
             longPoll.start();
 
