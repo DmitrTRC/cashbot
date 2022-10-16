@@ -20,15 +20,15 @@ Expense::~Expense() {
     delete _categories;
 }
 
-DB::Expense Expense::addExpense(const std::string &message) {
+DB::Expense Expense::addExpense(const std::string &message, long user) {
 
     Message parsedMessage = ParseMsg(message);
 
     DB::Category category = _categories->getCategory(parsedMessage.category_text);
 
     DB::Expense expense = {
-            .id = 0,
-            .user_id = 0,
+            .id = {},
+            .user_id = user,
             .amount = parsedMessage.amount,
             .category = parsedMessage.category_text
     };

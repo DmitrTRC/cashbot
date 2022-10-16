@@ -25,7 +25,7 @@ FlowBot::FlowBot() {
     _set_bot_commands();
     _initHandlers();
 
-    _expense = new Expense();
+    _expense = new Expense(DB::Expense());
 
 }
 
@@ -126,14 +126,19 @@ void FlowBot::_initHandlers() {
                                        "Your message is: " + message->text); // Debug only!
 
             //Main part for add expense
+            // DB::Expense* expense;
+            DB::Expense *expense;
             try {
-                auto expense = _expense->addExpense(message->text);
-            } catch (std::exception &e) {
+                expense = new DB::Expense(_expense->addExpense(message->text, message->from->id));
+            } catch (std::exception &e) { //TODO: Add custom exception
                 _bot->getApi().sendMessage(message->chat->id,
                                            "Wrong format");
                 return;
             }
-
+            std::string message_text = "Added expenses " + std::to_string(expense->amount) + " for " +
+                                       expense->category + "\n\n" + _expense->get_today_stat();
+            _bot->getApi().sendMessage(message->chat->id, message_text);
+            delete expense;
 
         } else {
             send_wrong_auth_message(message->from->id);

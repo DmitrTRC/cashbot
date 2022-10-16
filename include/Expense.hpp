@@ -20,13 +20,13 @@ struct Message {
 
 class Expense {
 public:
-    Expense();
+    explicit Expense();
 
     ~Expense();
 
     DB::Expense getExpense();
 
-    DB::Expense addExpense(const std::string &message);
+    DB::Expense addExpense(const std::string &message, long);
 
     std::string get_today_stat();
 
