@@ -24,7 +24,7 @@ public:
 
     ~Expense();
 
-    DB::Expense getExpense();
+    //DB::Expense getExpense();
 
     DB::Expense addExpense(const std::string &message, long);
 

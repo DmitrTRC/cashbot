@@ -25,7 +25,7 @@ FlowBot::FlowBot() {
     _set_bot_commands();
     _initHandlers();
 
-    _expense = new Expense(DB::Expense());
+    _expense = new Expense();
 
 }
 
