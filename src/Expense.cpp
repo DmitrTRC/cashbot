@@ -67,7 +67,7 @@ Message Expense::ParseMsg(const std::string &message) {
     return resultMessage;
 }
 
-std::string Expense::get_today_stat() {
+std::string Expense::get_today_stat() { //TODO: implement
 
     return "Today stat : 50000";
 }
