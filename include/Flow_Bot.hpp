@@ -9,37 +9,38 @@
 
 
 #include "Env_Keeper.hpp"
+#include "Expense.hpp"
 #include "db.hpp"
 
 
 class FlowBot {
 public:
-    FlowBot ();
+    FlowBot();
 
-    ~FlowBot ();
+    ~FlowBot();
 
-    void Start ();
+    void Start();
 
-    void Stop ();
+    void Stop();
 
-    void getInfo () const;
+    void getInfo() const;
 
 private:
     bool _is_running;
     EnvKeeper _env_keeper;
     TgBot::Bot *_bot;
+    Expense *_expense;
 
-    botDB _db_handler;
 
-    void _initHandlers ();
+    void _initHandlers();
 
-    int get_last_message_id ();
+    int get_last_message_id();
 
-    bool isAuthenticated (const long long &user_id);
+    bool isAuthenticated(const long long &user_id);
 
-    void send_wrong_auth_message (const long long &user_id);
+    void send_wrong_auth_message(const long long &user_id);
 
-    void _set_bot_commands ();
+    void _set_bot_commands();
 };
 
 

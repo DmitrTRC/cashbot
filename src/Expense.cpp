@@ -8,15 +8,23 @@
 
 #include <regex>
 
-Expense::Expense() = default;
+Expense::Expense() {
 
-Expense::~Expense() = default;
+    _db_handler = new botDB();
+    _categories = new Categories(_db_handler);
+};
+
+Expense::~Expense() {
+
+    delete _db_handler;
+    delete _categories;
+}
 
 DB::Expense Expense::addExpense(const std::string &message) {
 
     Message parsedMessage = ParseMsg(message);
 
-    DB::Category category = Categories::getCategory(parsedMessage.category_text);
+    DB::Category category = _categories->getCategory(parsedMessage.category_text);
 
     DB::Expense expense = {
             .id = 0,

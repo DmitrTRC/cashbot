@@ -24,9 +24,16 @@ FlowBot::FlowBot() {
     _bot = new TgBot::Bot(_env_keeper.get_Token());
     _set_bot_commands();
     _initHandlers();
+
+    _expense = new Expense();
+
 }
 
-FlowBot::~FlowBot() { delete _bot; }
+FlowBot::~FlowBot() {
+
+    delete _bot;
+    delete _expense;
+}
 
 void FlowBot::Start() {
 
@@ -120,7 +127,7 @@ void FlowBot::_initHandlers() {
 
             //Main part for add expense
             try {
-                auto expense = Expense::addExpense(message->text);
+                auto expense = _expense->addExpense(message->text);
             } catch (std::exception &e) {
                 _bot->getApi().sendMessage(message->chat->id,
                                            "Wrong format");

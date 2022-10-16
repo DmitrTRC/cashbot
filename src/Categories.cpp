@@ -69,7 +69,7 @@ DB::TCategories Categories::_getCategoriesFromDB() {
     std::vector<std::map<std::string, std::string >> categories = _db_handler->fetchAll(query_name, columns);
     auto result = _fill_aliases(categories);
 
-    return {}; //TODO: return result! (now it's empty)
+    return {result}; //TODO: return result! (now it's empty)
 }
 
 Categories::Categories(botDB *db) {

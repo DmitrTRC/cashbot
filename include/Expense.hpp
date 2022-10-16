@@ -9,6 +9,8 @@
 #include <string>
 
 #include "db_structure.hpp"
+#include "Categories.hpp"
+#include "db.hpp"
 
 ///Parsed Expense message
 struct Message {
@@ -35,7 +37,9 @@ public:
     void deleteExpense(const long &id);
 
 private:
+    botDB *_db_handler;
 
+    Categories *_categories;
 
     static Message ParseMsg(const std::string &message);
 

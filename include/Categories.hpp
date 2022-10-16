@@ -17,11 +17,11 @@ class Categories {
 public:
     explicit Categories(botDB *db);
 
-    ~Categories();
+    ~Categories() = default;
 
     DB::TCategories getAllCategories();
 
-    static DB::Category getCategory(const std::string &);
+    DB::Category getCategory(const std::string &);
 
 
 private:
