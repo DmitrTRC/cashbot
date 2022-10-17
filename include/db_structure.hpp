@@ -12,6 +12,13 @@
 namespace DB {
 
 //New DB record with Expense
+    struct DBExpense {
+        long amount;
+        std::string category;
+        std::string date;
+    };
+
+//Expense Item
     struct Expense {
         long id;
         long user_id;

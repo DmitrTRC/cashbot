@@ -31,6 +31,9 @@ public:
 
     void deleteRow(std::string &table, const long &id);
 
+    //Get one raw from SQL request
+    std::map<std::string, std::string> fetchOne(std::string);
+
     void clearDB();
 
 

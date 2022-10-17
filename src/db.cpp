@@ -254,4 +254,22 @@ std::string botDB::getDBPath() const {
     return _bot_db_path;
 }
 
+//Get one row from SQL query
+std::map<std::string, std::string> botDB::fetchOne(std::string SQL_request) {
+
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(_bot_db, SQL_request.c_str(), -1, &stmt, nullptr);
+    std::map<std::string, std::string> result;
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        for (int i = 0; i < sqlite3_column_count(stmt); i++) {
+            result[std::string((char *) sqlite3_column_name(stmt, i))] =
+                    std::string((char *) sqlite3_column_text(stmt, i));
+        }
+    }
+    sqlite3_finalize(stmt);
+
+    return result;
+
+}
+
 

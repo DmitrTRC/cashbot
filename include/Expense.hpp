@@ -25,6 +25,7 @@ public:
     ~Expense();
 
     //DB::Expense getExpense();
+    static std::map<std::string, std::string> getSQLExpense(const DB::Expense &);
 
     DB::Expense addExpense(const std::string &message, long);
 
