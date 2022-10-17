@@ -127,16 +127,16 @@ void FlowBot::_initHandlers() {
 
             //Main part for add expense
             // DB::Expense* expense;
-            DB::Expense *expense;
+            DB::DBExpense *expense;
             try {
-                expense = new DB::Expense(_expense->addExpense(message->text, message->from->id));
+                expense = new DB::DBExpense(_expense->addExpense(message->text, message->from->id));
             } catch (std::exception &e) { //TODO: Add custom exception
                 _bot->getApi().sendMessage(message->chat->id,
                                            "Wrong format");
                 return;
             }
             std::string message_text = "Added expenses " + std::to_string(expense->amount) + " for " +
-                                       expense->category + "\n\n" + _expense->get_today_stat();
+                                       expense->category_codename + "\n\n" + _expense->get_today_stat();
             _bot->getApi().sendMessage(message->chat->id, message_text);
             delete expense;
 

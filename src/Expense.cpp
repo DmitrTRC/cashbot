@@ -20,23 +20,27 @@ Expense::~Expense() {
     delete _categories;
 }
 
-DB::Expense Expense::addExpense(const std::string &message, long user) {
+DB::DBExpense Expense::addExpense(const std::string &message, long user) {
 
     Message parsedMessage = ParseMsg(message);
 
     DB::Category category = _categories->getCategory(parsedMessage.category_text);
-
-    DB::Expense expense = {
-            .id = {},
+    //TODO: Return time without seconds
+    DB::DBExpense expense = {
             .user_id = user,
             .amount = parsedMessage.amount,
-            .category = parsedMessage.category_text
+            .created = getDateToStr(time(nullptr)),
+            .category_codename = category.codename,
+            .raw_text = message
     };
 
+
     std::map<std::string, std::string> sqlExpense = getSQLExpense(expense);
+
     _db_handler->insertRow("expense", sqlExpense);
 
     return expense;
+
 }
 
 
@@ -73,7 +77,7 @@ Message Expense::ParseMsg(const std::string &message) {
 
 // Returns string with today expenses
 std::string Expense::get_today_stat() { //TODO: implement
-    std::string SQL = "select sum(amount) from expenses where date(date) = date('now');";
+    std::string SQL = "select sum(amount) from expenses where date(created) = date('now');";
     auto result = _db_handler->fetchOne(SQL);
 
     if (result.empty()) {
@@ -89,13 +93,15 @@ std::string Expense::get_today_stat() { //TODO: implement
     return result_str;
 }
 
-std::map<std::string, std::string> Expense::getSQLExpense(const DB::Expense &expense) {
+std::map<std::string, std::string> Expense::getSQLExpense(const DB::DBExpense &expense) {
 
     std::map<std::string, std::string> result;
 
     result["user_id"] = std::to_string(expense.user_id);
     result["amount"] = std::to_string(expense.amount);
-    result["category"] = expense.category;
+    result["created"] = expense.created;
+    result["category_codename"] = expense.category_codename;
+    result["raw_text"] = expense.raw_text;
 
     return result;
 

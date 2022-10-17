@@ -25,9 +25,9 @@ public:
     ~Expense();
 
     //DB::Expense getExpense();
-    static std::map<std::string, std::string> getSQLExpense(const DB::Expense &);
+    static std::map<std::string, std::string> getSQLExpense(const DB::DBExpense &);
 
-    DB::Expense addExpense(const std::string &message, long);
+    DB::DBExpense addExpense(const std::string &message, long);
 
     std::string get_today_stat();
 
