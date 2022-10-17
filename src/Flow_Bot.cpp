@@ -135,6 +135,7 @@ void FlowBot::_initHandlers() {
                                            "Wrong format");
                 return;
             }
+            //FIXME: category code_name id empty
             std::string message_text = "Added expenses " + std::to_string(expense->amount) + " for " +
                                        expense->category_codename + "\n\n" + _expense->get_today_stat();
             _bot->getApi().sendMessage(message->chat->id, message_text);

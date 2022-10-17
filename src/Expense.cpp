@@ -49,7 +49,7 @@ std::string Expense::getDateToStr(time_t now_time) {
 
     struct tm *now_tm = localtime(&now_time);
     char date[20];
-    strftime(date, 20, "%Y-%m-%d %H:%M%S", now_tm);
+    strftime(date, 20, "%Y-%m-%d", now_tm);
     return {date};
 
 }
@@ -77,18 +77,15 @@ Message Expense::ParseMsg(const std::string &message) {
 
 // Returns string with today expenses
 std::string Expense::get_today_stat() { //TODO: implement
-    std::string SQL = "select sum(amount) from expenses where date(created) = date('now');";
+    std::string SQL = "select sum(amount) from expense where date(created) = date('now', 'localtime');";
     auto result = _db_handler->fetchOne(SQL);
 
     if (result.empty()) {
         return "No expenses today";
     }
 
-    std::string result_str = "Today expenses: \n ";
-    for (auto &[key, value]: result) {
-        result_str += key + ": " + value + "\n";
-        std::cout << "Debug : " << key << ": " << value << std::endl;
-    }
+    std::string result_str = "Today expenses: \n " + result.begin()->second + " RUB";
+
 
     return result_str;
 }
