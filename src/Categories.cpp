@@ -16,7 +16,7 @@ DB::TCategories Categories::getAllCategories() {
 DB::Category Categories::getCategory(const std::string &categoryName) {
 
     DB::Category resultCategory;
-    DB::Category otherCategory;
+    DB::Category otherCategory{"other", categoryName, false, {}};
 
 
     for (auto &category: _categories) {

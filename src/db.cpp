@@ -121,6 +121,8 @@ void botDB::_initDB() {
         sqlite3_free(zErrMsg);
     }
 
+    fill_base_categories();
+
     std::cout << "Init DB done" << std::endl;
 
 }
@@ -269,6 +271,26 @@ std::map<std::string, std::string> botDB::fetchOne(std::string SQL_request) {
     sqlite3_finalize(stmt);
 
     return result;
+
+}
+
+void botDB::fill_base_categories() {
+
+    std::string sql = "insert into category (codename, name, is_base_expense, aliases)  values \n"
+                      "('products', 'продукты', true, 'еда'), \n "
+                      "('food', 'еда', true, ''), \n"
+                      "('fuel', 'топливо', true, ''), \n"
+                      "('cash', 'наличные', true, ''), \n"
+                      "('coffee', 'кофе', true, ''), \n"
+                      "('dinner', 'обед', true, 'столовая, ланч, бизнес-ланч, бизнес ланч'), \n"
+                      "('other', 'другое', true, '');";
+
+    char *zErrMsg = nullptr;
+    int rc = sqlite3_exec(_bot_db, sql.c_str(), nullptr, nullptr, &zErrMsg);
+    if (rc != SQLITE_OK) {
+        std::cerr << "SQL error from  fill_base_categories : " << zErrMsg << std::endl;
+        sqlite3_free(zErrMsg);
+    }
 
 }
 

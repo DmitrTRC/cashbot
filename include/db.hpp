@@ -34,6 +34,8 @@ public:
     //Get one raw from SQL request
     std::map<std::string, std::string> fetchOne(std::string);
 
+    void fill_base_categories();
+
     void clearDB();
 
 
