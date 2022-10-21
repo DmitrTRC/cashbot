@@ -27,7 +27,7 @@ namespace DB {
         long amount;
         std::string category;
     };
-    using TExpenses = std::vector<Expense>;
+    using TExpenses = std::vector<DBExpense>;
 
     struct Category {
         std::string codename;

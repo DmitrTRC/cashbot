@@ -43,6 +43,8 @@ public:
     std::vector<std::map<std::string, std::string >>
     fetchAll(const std::string &table, const std::vector<std::string> &);
 
+    std::vector<std::map<std::string, std::string>> fetchMany(const std::string &SQL_request);
+
     [[nodiscard]] bool getCallState() const;
 
     void setCallState(bool callState);

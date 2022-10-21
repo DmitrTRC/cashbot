@@ -126,6 +126,44 @@ long Expense::getBudgetLimit() {
     return 0;
 }
 
+std::vector<DB::Expense> Expense::getLast() {
+
+//    std::string SQL = "select e.id, e.amount, c.name "
+//                      "from expense e left join category c "
+//                      "on c.codename=e.category_codename "
+//                      "order by created desc limit 10";
+//    auto result = _db_handler->fetchMANY(SQL);
+//    return std::vector<DB::Expense>();
+    return {};
+}
+
+DB::TExpenses Expense::getAllExpenses(const int &limit) {
+
+
+    std::string SQL = "select e.id, e.amount, c.name, e.created "
+                      "from expense e left join category c "
+                      "on c.codename=e.category_codename "
+                      "order by created desc limit " + std::to_string(limit);
+
+    auto result = _db_handler->fetchMany(SQL);
+    DB::TExpenses expenses;
+    for (auto row: result) {
+        DB::DBExpense expense = {
+                .user_id = 0, // ! FIXME: DO not filled!
+                .amount = std::stol(row["amount"]),
+                .created = row["created"],
+                .category_codename = row["category_codename"],
+                .raw_text = row["raw_text"]
+
+        };
+        expenses.push_back(expense);
+    }
+
+    return expenses;
+
+}
+
+
 
 
 

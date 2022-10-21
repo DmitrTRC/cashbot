@@ -294,4 +294,28 @@ void botDB::fill_base_categories() {
 
 }
 
+auto botDB::fetchMany(const std::string &SQL_request) -> std::vector<std::map<std::string, std::string>> {
+
+    sqlite3_stmt *stmt;
+    sqlite3_prepare_v2(_bot_db, SQL_request.c_str(), -1, &stmt, nullptr);
+    std::vector<std::map<std::string, std::string>> result;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        std::map<std::string, std::string> row;
+        for (int i = 0; i < sqlite3_column_count(stmt); i++) {
+            row[std::string((char *) sqlite3_column_name(stmt, i))] =
+                    std::string((char *) sqlite3_column_text(stmt, i));
+        }
+        result.push_back(row);
+    }
+    sqlite3_finalize(stmt);
+    return result;
+
+}
+
+
+
+
+
+
+
 

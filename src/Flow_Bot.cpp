@@ -89,7 +89,22 @@ void FlowBot::_initHandlers() {
             send_wrong_auth_message(message->from->id);
         }
     });
+    _bot->getEvents().onCommand("expenses", [&](const TgBot::Message::Ptr &message) {
 
+        if (isAuthenticated(message->from->id)) {
+            auto expenses = _expense->getAllExpenses();
+            std::string res_message = "Last expenses:\n";
+
+            for (auto &expense: expenses) {
+                res_message += expense.created + " " + std::to_string(expense.amount) + " " + expense.raw_text + "\n";
+            }
+
+            _bot->getApi().sendMessage(message->chat->id, res_message);
+
+        } else {
+            send_wrong_auth_message(message->from->id);
+        }
+    });
     _bot->getEvents().onCommand("stop", [&](const TgBot::Message::Ptr &message) {
 
         if (isAuthenticated(message->from->id)) {
@@ -135,7 +150,7 @@ void FlowBot::_initHandlers() {
                                            "Wrong format");
                 return;
             }
-            //FIXME: category code_name id empty
+
             std::string message_text = "Added expenses " + std::to_string(expense->amount) + " for " +
                                        expense->category_codename + "\n\n" + _expense->get_today_stat();
             _bot->getApi().sendMessage(message->chat->id, message_text);
