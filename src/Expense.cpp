@@ -84,8 +84,25 @@ std::string Expense::get_today_stat() { //TODO: implement
         return "No expenses today";
     }
 
-    std::string result_str = "Today expenses: \n " + result.begin()->second + " RUB";
+    std::string result_str = "Today expenses: \n " + "Total: " + result.begin()->second + " RUB" + "\n";
 
+    SQL = "select sum(amount) "
+          "from expense where date(created)=date('now', 'localtime') "
+          "and category_codename in (select codename "
+          "from category where is_base_expense=true)";
+
+    result = _db_handler->fetchOne(SQL);
+
+    std::string base_expenses;
+    if (result.empty()) {
+        base_expenses = "0";
+    } else {
+        base_expenses = result.begin()->second;
+    }
+
+    result_str += "Base expenses: " + base_expenses + " RUB" + "\n";
+    result_str += "FROM BUDGET : " + std::to_string(getBudgetLimit() - std::stol(base_expenses)) + " RUB" + "\n";
+    result_str += "LAST MONTH :  /month";
 
     return result_str;
 }
@@ -102,6 +119,11 @@ std::map<std::string, std::string> Expense::getSQLExpense(const DB::DBExpense &e
 
     return result;
 
+}
+
+long Expense::getBudgetLimit() {
+
+    return 0;
 }
 
 
