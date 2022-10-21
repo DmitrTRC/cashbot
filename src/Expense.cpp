@@ -84,7 +84,7 @@ std::string Expense::get_today_stat() { //TODO: implement
         return "No expenses today";
     }
 
-    std::string result_str = "Today expenses: \n " + "Total: " + result.begin()->second + " RUB" + "\n";
+    std::string result_str = "Today expenses: \nTotal: " + result.begin()->second + " RUB" + "\n";
 
     SQL = "select sum(amount) "
           "from expense where date(created)=date('now', 'localtime') "
