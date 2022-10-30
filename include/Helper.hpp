@@ -9,12 +9,13 @@
 #include <initializer_list>
 #include <vector>
 
+//TODO: Make associative array for handlers
 
 namespace Helper {
     const std::initializer_list<std::string> onHelp = {"start", "help"};
 
     constexpr auto helpMessage = "CashFlow Bot\n\n"
-                                  "Add expenses: 25000 Medical_Service\n"
+                                 "Add expenses: 25000 Medical_Service\n"
                                  "Today Statistics: /today\n"
                                  "Month Statistics: /month\n"
                                  "Last Expenses: /expenses\n"
@@ -26,7 +27,8 @@ namespace Helper {
             {"today",      "Get today statistics"},
             {"month",      "Get month statistics"},
             {"expenses",   "Get last expenses"},
-            {"categories", "Get categories"}
+            {"categories", "Get categories"},
+            {"stop",       "Stop the bot"}
 
     };
 }

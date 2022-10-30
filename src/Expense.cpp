@@ -123,18 +123,18 @@ std::map<std::string, std::string> Expense::getSQLExpense(const DB::DBExpense &e
 
 long Expense::getBudgetLimit() {
 
-    return 0;
+    std::vector<std::string> columns = {"daily_limit"};
+
+    auto result = _db_handler->fetchAll("budget", columns).begin()->at("daily_limit");
+
+    return std::stol(result);
 }
 
-std::vector<DB::Expense> Expense::getLast() {
+DB::TExpenses Expense::getLast() {
 
-//    std::string SQL = "select e.id, e.amount, c.name "
-//                      "from expense e left join category c "
-//                      "on c.codename=e.category_codename "
-//                      "order by created desc limit 10";
-//    auto result = _db_handler->fetchMANY(SQL);
-//    return std::vector<DB::Expense>();
-    return {};
+    auto result = getAllExpenses(5);
+
+    return result;
 }
 
 DB::TExpenses Expense::getAllExpenses(const int &limit) {
@@ -168,6 +168,38 @@ void Expense::deleteExpense(const long &id) {
     _db_handler->deleteRow("expense", id);
 
 }
+
+std::string Expense::get_month_stat() {
+
+    std::string SQL = "select sum(amount) from expense where strftime('%m', created) = strftime('%m', 'now', 'localtime');";
+    auto result = _db_handler->fetchOne(SQL);
+
+    if (result.empty()) {
+        return "No expenses this month";
+    }
+
+    std::string result_str = "This month expenses: \nTotal: " + result.begin()->second + " RUB" + "\n";
+
+    SQL = "select sum(amount) "
+          "from expense where strftime('%m', created) = strftime('%m', 'now', 'localtime') "
+          "and category_codename in (select codename "
+          "from category where is_base_expense=true)";
+
+    result = _db_handler->fetchOne(SQL);
+
+    std::string base_expenses;
+    if (result.empty()) {
+        base_expenses = "0";
+    } else {
+        base_expenses = result.begin()->second;
+    }
+
+    result_str += "Base expenses: " + base_expenses + " RUB" + "\n";
+    result_str += "FROM BUDGET : " + std::to_string(getBudgetLimit() - std::stol(base_expenses)) + " RUB" + "\n";
+
+    return result_str;
+}
+
 
 
 

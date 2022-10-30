@@ -127,7 +127,7 @@ void botDB::_initDB() {
 
 }
 
-void botDB::deleteRow(const char *table, const long &id) {
+void botDB::deleteRow(const std::string &table, const long &id) {
 
     std::string sql = "DELETE FROM " + table + " WHERE id = " + std::to_string(id);
     char *zErrMsg = nullptr;

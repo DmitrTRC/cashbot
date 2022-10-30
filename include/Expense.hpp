@@ -33,9 +33,9 @@ public:
 
     std::string get_month_stat();
 
-    std::vector<DB::Expense> getLast();
+    DB::TExpenses getLast();
 
-    DB::TExpenses getAllExpenses(const int &limit = 5);
+    DB::TExpenses getAllExpenses(const int &limit = 100); //TODO: Add possibility to get all expenses
 
     void deleteExpense(const long &id);
 

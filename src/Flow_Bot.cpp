@@ -89,6 +89,7 @@ void FlowBot::_initHandlers() {
             send_wrong_auth_message(message->from->id);
         }
     });
+
     _bot->getEvents().onCommand("expenses", [&](const TgBot::Message::Ptr &message) {
 
         if (isAuthenticated(message->from->id)) {
@@ -105,6 +106,7 @@ void FlowBot::_initHandlers() {
             send_wrong_auth_message(message->from->id);
         }
     });
+
     _bot->getEvents().onCommand("stop", [&](const TgBot::Message::Ptr &message) {
 
         if (isAuthenticated(message->from->id)) {
