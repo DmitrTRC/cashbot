@@ -35,7 +35,7 @@ public:
 
     std::vector<DB::Expense> getLast();
 
-    [[maybe_unused]] DB::TExpenses getAllExpenses(const int &limit = 5);
+    DB::TExpenses getAllExpenses(const int &limit = 5);
 
     void deleteExpense(const long &id);
 

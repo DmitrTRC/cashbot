@@ -163,6 +163,12 @@ DB::TExpenses Expense::getAllExpenses(const int &limit) {
 
 }
 
+void Expense::deleteExpense(const long &id) {
+
+    _db_handler->deleteRow("expense", id);
+
+}
+
 
 
 

@@ -29,7 +29,7 @@ public:
     ///Insert Row in any table
     void insertRow(const std::string &table, const std::map<std::string, std::string> &);
 
-    void deleteRow(std::string &table, const long &id);
+    void deleteRow(const char *table, const long &id);
 
     //Get one raw from SQL request
     std::map<std::string, std::string> fetchOne(std::string);
