@@ -17,7 +17,6 @@ find_package(CURL)
 
 include_directories(/usr/local/include ${OPENSSL_ROOT_DIR}/include ${Boost_INCLUDE_DIR})
 
-include_directories(${CURSES_INCLUDE_DIR})
 
 if (CURL_FOUND)
     include_directories(${CURL_INCLUDE_DIRS})
@@ -63,6 +62,7 @@ add_library(bot_lib STATIC
             src/Expense.cpp
             src/Flow_Bot.cpp
             src/Bot_Exceptions.cpp
+            src/Helper.cpp
             )
 
 target_include_directories(bot_lib

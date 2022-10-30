@@ -84,7 +84,7 @@ void FlowBot::_initHandlers() {
     _bot->getEvents().onCommand(Helper::onHelp, [&](const TgBot::Message::Ptr &message) {
         if (isAuthenticated(message->from->id)) {
             _bot->getApi().sendMessage(message->chat->id,
-                                       Helper::helpMessage);
+                                       Helper::helpMessage());
         } else {
             send_wrong_auth_message(message->from->id);
         }

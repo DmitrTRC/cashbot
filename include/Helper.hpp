@@ -14,12 +14,8 @@
 namespace Helper {
     const std::initializer_list<std::string> onHelp = {"start", "help"};
 
-    constexpr auto helpMessage = "CashFlow Bot\n\n"
-                                 "Add expenses: 25000 Medical_Service\n"
-                                 "Today Statistics: /today\n"
-                                 "Month Statistics: /month\n"
-                                 "Last Expenses: /expenses\n"
-                                 "Categories: /categories";
+    std::string helpMessage();
+
 
     const std::vector<std::pair<std::string_view, std::string_view>> _bot_commands = {
             {"start",      "Start the bot"},
