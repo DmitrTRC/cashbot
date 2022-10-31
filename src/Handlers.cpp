@@ -1,9 +1,16 @@
 //
 // Created by Dmitry Morozov on 31/10/22.
 //
+#include "Env_Keeper.hpp"
 #include "Expense.hpp"
 #include "Flow_Bot.hpp"
 #include "Handlers.hpp"
+
+void send_wrong_auth_message(TgBot::Bot *_bot, const long long &user_id) {
+
+    _bot->getApi().sendMessage(user_id, "You are not authenticated");
+}
+
 
 void handleHelpCommand(const TgBot::Message::Ptr &message) {
 
@@ -36,8 +43,23 @@ void handleExpensesCommand(const TgBot::Message::Ptr &message) {
     }
 }
 
+void handleStopCommand(const TgBot::Message::Ptr &message) {
 
-void send_wrong_auth_message(TgBot::Bot *_bot, const long long &user_id) {
+    auto botPtr = FlowBot::get_botPtr();
 
-    _bot->getApi().sendMessage(user_id, "You are not authenticated");
+    if (isAuthenticated(message->from->id)) {
+        if (EnvKeeper::get_last_stop_id() >= message->messageId) {
+            botPtr->getApi().sendMessage(message->chat->id,
+                                         "The bot is already stopped");
+        } else {
+            botPtr->getApi().sendMessage(message->chat->id,
+                                         "The bot is stopped");
+            FlowBot::Stop();
+        }
+
+    } else {
+        send_wrong_auth_message(botPtr, message->from->id);
+    }
 }
+
+

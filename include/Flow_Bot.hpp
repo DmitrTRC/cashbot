@@ -21,7 +21,7 @@ public:
 
     void Start();
 
-    void Stop();
+    static void Stop();
 
     static void getInfo();
 
@@ -30,7 +30,7 @@ public:
     static Expense *get_expensePtr();
 
 private:
-    bool _is_running;
+    static bool _is_running;
     EnvKeeper _env_keeper;
     static TgBot::Bot *_bot;
     static Expense *_expense;
@@ -39,10 +39,6 @@ private:
     void _initHandlers();
 
     int get_last_message_id();
-
-    bool isAuthenticated(const long long &user_id);
-
-    void send_wrong_auth_message(const long long &user_id);
 
     void _set_bot_commands();
 };

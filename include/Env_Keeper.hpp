@@ -28,7 +28,7 @@ public:
 
     void set_last_stop_id(int);
 
-    int get_last_stop_id();
+    static int get_last_stop_id();
 
     [[nodiscard]] bool is_Empty() const;
 

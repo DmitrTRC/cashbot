@@ -13,6 +13,8 @@ void handleHelpCommand(const TgBot::Message::Ptr &);
 
 void handleExpensesCommand(const TgBot::Message::Ptr &);
 
+void handleStopCommand(const TgBot::Message::Ptr &);
+
 void send_wrong_auth_message(TgBot::Bot *, const long long &);
 
 
