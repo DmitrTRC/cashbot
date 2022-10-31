@@ -83,16 +83,16 @@ void FlowBot::Stop() {
 void FlowBot::_initHandlers() {
 
     _bot->getEvents().onCommand(Helper::onHelp, [&](TgBot::Message::Ptr &message) {
-        handleHelpCommand(this, message);
+//        handleHelpCommand(this, message);
     });
-    _bot->getEvents().onCommand("expenses", [this](TgBot::Message::Ptr &message) {
-        handleExpensesCommand(this, message);
-    }
-    _bot->getEvents().onCommand("stop", [this](TgBot::Message::Ptr &message) {
-        handleStopCommand(this, message);
-    }
-
-    _bot->getEvents().onAnyMessage(handleAnyMessage);
+//    _bot->getEvents().onCommand("expenses", [this](TgBot::Message::Ptr &message) {
+//        handleExpensesCommand(this, message);
+//    }
+//    _bot->getEvents().onCommand("stop", [this](TgBot::Message::Ptr &message) {
+//        handleStopCommand(this, message);
+//    }
+//
+//    _bot->getEvents().onAnyMessage(handleAnyMessage);
 
 }
 
