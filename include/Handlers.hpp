@@ -7,10 +7,11 @@
 
 #include "Auth.hpp"
 #include "Helper.hpp"
-
 #include <tgbot/tgbot.h>
 
-void handleHelpCommand(TgBot::Bot *, const TgBot::Message::Ptr &);
+void handleHelpCommand(const TgBot::Message::Ptr &);
+
+void handleExpensesCommand(const TgBot::Message::Ptr &);
 
 void send_wrong_auth_message(TgBot::Bot *, const long long &);
 

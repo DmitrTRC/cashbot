@@ -6,8 +6,9 @@
 
 #include "Expense.hpp"
 #include "Flow_Bot.hpp"
-#include "Helper.hpp"
 
+#include "Helper.hpp"
+#include "Handlers.hpp"
 #include <iostream>
 #include <memory>
 
@@ -61,7 +62,7 @@ void FlowBot::Start() {
     }
 }
 
-void FlowBot::getInfo() const {
+void FlowBot::getInfo() {
 
     auto me = _bot->getApi().getMe();
 
@@ -81,32 +82,8 @@ void FlowBot::Stop() {
 /// Check Auth
 void FlowBot::_initHandlers() {
 
-    _bot->getEvents().onCommand(Helper::onHelp, [&](const TgBot::Message::Ptr &message) {
-        if (isAuthenticated(message->from->id)) {
-            _bot->getApi().sendMessage(message->chat->id,
-                                       Helper::helpMessage());
-        } else {
-            send_wrong_auth_message(message->from->id);
-        }
-    });
-
-    _bot->getEvents().onCommand("expenses", [&](const TgBot::Message::Ptr &message) {
-
-        if (isAuthenticated(message->from->id)) {
-            auto expenses = _expense->getAllExpenses();
-            std::string res_message = "Last expenses:\n";
-
-            for (auto &expense: expenses) {
-                res_message += expense.created + " " + std::to_string(expense.amount) + " " + expense.raw_text + "\n";
-            }
-
-            _bot->getApi().sendMessage(message->chat->id, res_message);
-
-        } else {
-            send_wrong_auth_message(message->from->id);
-        }
-    });
-
+    _bot->getEvents().onCommand(Helper::onHelp, handleHelpCommand);
+    _bot->getEvents().onCommand("expenses", handleExpensesCommand);
     _bot->getEvents().onCommand("stop", [&](const TgBot::Message::Ptr &message) {
 
         if (isAuthenticated(message->from->id)) {
@@ -185,6 +162,16 @@ void FlowBot::_set_bot_commands() {
 
 
     _bot->getApi().setMyCommands(commands);
+}
+
+TgBot::Bot *FlowBot::get_botPtr() {
+
+    return _bot;
+}
+
+Expense *FlowBot::get_expensePtr() {
+
+    return _expense;
 }
 
 

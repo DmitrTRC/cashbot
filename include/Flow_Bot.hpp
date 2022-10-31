@@ -23,13 +23,17 @@ public:
 
     void Stop();
 
-    void getInfo() const;
+    static void getInfo();
+
+    [[nodiscard]] static TgBot::Bot *get_botPtr();
+
+    static Expense *get_expensePtr();
 
 private:
     bool _is_running;
     EnvKeeper _env_keeper;
-    TgBot::Bot *_bot;
-    Expense *_expense;
+    static TgBot::Bot *_bot;
+    static Expense *_expense;
 
 
     void _initHandlers();
