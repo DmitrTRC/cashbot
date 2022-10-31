@@ -84,22 +84,7 @@ void FlowBot::_initHandlers() {
 
     _bot->getEvents().onCommand(Helper::onHelp, handleHelpCommand);
     _bot->getEvents().onCommand("expenses", handleExpensesCommand);
-    _bot->getEvents().onCommand("stop", [&](const TgBot::Message::Ptr &message) {
-
-        if (isAuthenticated(message->from->id)) {
-            if (_env_keeper.get_last_stop_id() >= message->messageId) {
-                _bot->getApi().sendMessage(message->chat->id,
-                                           "The bot is already stopped");
-            } else {
-                _bot->getApi().sendMessage(message->chat->id,
-                                           "The bot is stopped");
-                Stop();
-            }
-
-        } else {
-            send_wrong_auth_message(message->from->id);
-        }
-    });
+    _bot->getEvents().onCommand("stop", handleStopCommand);
 
 
     _bot->getEvents().onAnyMessage([&](const TgBot::Message::Ptr &message) {
