@@ -93,7 +93,7 @@ add_executable(
 )
 
 
-target_link_libraries(bot_binary PRIVATE
+target_link_libraries(bot_binary PUBLIC
                       bot_lib)
 
 ######### TEST SECTION ###########

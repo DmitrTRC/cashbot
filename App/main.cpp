@@ -6,11 +6,10 @@
  *
  * @return 0
  */
-int main () {
+int main() {
 
     FlowBot bot;
-
-    bot.Start ();
+    bot.Start();
 
     return 0;
 }

@@ -86,44 +86,8 @@ void FlowBot::_initHandlers() {
     _bot->getEvents().onCommand("expenses", handleExpensesCommand);
     _bot->getEvents().onCommand("stop", handleStopCommand);
 
+    _bot->getEvents().onAnyMessage(handleAnyMessage);
 
-    _bot->getEvents().onAnyMessage([&](const TgBot::Message::Ptr &message) {
-
-        if (isAuthenticated(message->from->id)) {
-            std::cout << "User : " << message->from->id << " wrote " << message->text
-                      << std::endl;
-
-// Check if the message is a command
-            if (std::any_of(Helper::_bot_commands.begin(), Helper::_bot_commands.end(), [&message](
-                    std::pair<std::string_view, std::string_view> command) {
-                return message->text.find(command.first) != std::string::npos;
-            })) {
-                return;
-            }
-
-            _bot->getApi().sendMessage(message->chat->id,
-                                       "Your message is: " + message->text); // Debug only!
-
-            //Main part for add expense
-            // DB::Expense* expense;
-            DB::DBExpense *expense;
-            try {
-                expense = new DB::DBExpense(_expense->addExpense(message->text, message->from->id));
-            } catch (std::exception &e) { //TODO: Add custom exception
-                _bot->getApi().sendMessage(message->chat->id,
-                                           "Wrong format");
-                return;
-            }
-
-            std::string message_text = "Added expenses " + std::to_string(expense->amount) + " for " +
-                                       expense->category_codename + "\n\n" + _expense->get_today_stat();
-            _bot->getApi().sendMessage(message->chat->id, message_text);
-            delete expense;
-
-        } else {
-            send_wrong_auth_message(message->from->id);
-        }
-    });
 }
 
 // GetUpdates and return last message id

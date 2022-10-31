@@ -7,35 +7,35 @@
 
 //TODO: Refactor to Template Wrapper
 
-template<typename T>
-class Auth {
-    T f;
-public:
-    explicit Auth(T t) {
-
-        f = t;
-    }
-
-    T &operator()() {
-
-        return f;
-    }
-};
-
-///Use class Auth to wrap function
-void ifAuth() {
-
-    Auth auth = Auth([]() {
-        return 1;
-    });
-    auth();
-}
-
-bool isAuth() {
-
-    return true;
-
-}
+//template<typename T>
+//class Auth {
+//    T f;
+//public:
+//    explicit Auth(T t) {
+//
+//        f = t;
+//    }
+//
+//    T &operator()() {
+//
+//        return f;
+//    }
+//};
+//
+/////Use class Auth to wrap function
+//void ifAuth() {
+//
+//    Auth auth = Auth([]() {
+//        return 1;
+//    });
+//    auth();
+//}
+//
+//bool isAuth() {
+//
+//    return true;
+//
+//}
 
 bool isAuthenticated(const long long &);
 

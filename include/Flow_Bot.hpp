@@ -36,11 +36,11 @@ private:
     static Expense *_expense;
 
 
-    void _initHandlers();
+    static void _initHandlers();
 
-    int get_last_message_id();
+    static int get_last_message_id();
 
-    void _set_bot_commands();
+    static void _set_bot_commands();
 };
 
 
