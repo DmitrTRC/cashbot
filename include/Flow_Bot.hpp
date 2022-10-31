@@ -21,26 +21,36 @@ public:
 
     void Start();
 
-    static void Stop();
+    void Stop();
 
-    static void getInfo();
+    void getInfo();
 
-    [[nodiscard]] static TgBot::Bot *get_botPtr();
+    [[nodiscard]]  TgBot::Bot *get_botPtr();
 
-    static Expense *get_expensePtr();
+    Expense *get_expensePtr();
 
 private:
-    static bool _is_running;
+    bool _is_running;
     EnvKeeper _env_keeper;
-    static TgBot::Bot *_bot;
-    static Expense *_expense;
+    TgBot::Bot *_bot;
+    Expense *_expense;
 
 
-    static void _initHandlers();
+    void _initHandlers();
 
-    static int get_last_message_id();
+    int get_last_message_id();
 
-    static void _set_bot_commands();
+    void _set_bot_commands();
+
+    friend void handleHelpCommand(FlowBot *, const TgBot::Message::Ptr &);
+
+    friend void handleExpensesCommand(FlowBot *, const TgBot::Message::Ptr &);
+
+    friend void handleStopCommand(FlowBot *, const TgBot::Message::Ptr &);
+
+    friend void handleAnyMessage(FlowBot *, const TgBot::Message::Ptr &);
+
+    friend void send_wrong_auth_message(FlowBot *, const long long &);
 };
 
 

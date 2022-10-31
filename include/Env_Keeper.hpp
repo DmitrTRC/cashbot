@@ -28,16 +28,16 @@ public:
 
     void set_last_stop_id(int);
 
-    static int get_last_stop_id();
+    int get_last_stop_id();
 
     [[nodiscard]] bool is_Empty() const;
 
     //TODO: Refactor to size_t instead of long long
-    [[nodiscard]] static std::set<long long> get_user_ids();
+    [[nodiscard]]  std::set<long long> get_user_ids();
 
 
 private:
-    static json _env;
+    json _env;
 
     std::string _path;
 

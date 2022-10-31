@@ -6,70 +6,65 @@
 #include "Expense.hpp"
 #include "Flow_Bot.hpp"
 #include "Helper.hpp"
-#include "Handlers.hpp"
 
-void send_wrong_auth_message(const long long &user_id) {
 
-    FlowBot::get_botPtr()->getApi().sendMessage(user_id, "You are not authenticated");
+void send_wrong_auth_message(FlowBot *botPtr, const long long &user_id) {
+
+    botPtr->_bot->getApi().sendMessage(user_id, "You are not authenticated");
 }
 
 
-void handleHelpCommand(const TgBot::Message::Ptr &message) {
+void handleHelpCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
 
-    auto botPtr = FlowBot::get_botPtr();
 
     if (isAuthenticated(message->from->id)) {
 
-        botPtr->getApi().sendMessage(message->chat->id,
-                                     Helper::helpMessage());
+        botPtr->_bot->getApi().sendMessage(message->chat->id,
+                                           Helper::helpMessage());
     } else {
-        send_wrong_auth_message(message->from->id);
+        send_wrong_auth_message(botPtr, message->from->id);
     }
 }
 
-void handleExpensesCommand(const TgBot::Message::Ptr &message) {
+void handleExpensesCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
 
-    auto botPtr = FlowBot::get_botPtr();
     if (isAuthenticated(message->from->id)) {
-        auto expenses = FlowBot::get_expensePtr()->getAllExpenses();
+        auto expenses = botPtr->_expense->getAllExpenses();
         std::string res_message = "Last expenses:\n";
 
         for (auto &expense: expenses) {
             res_message += expense.created + " " + std::to_string(expense.amount) + " " + expense.raw_text + "\n";
         }
 
-        botPtr->getApi().sendMessage(message->chat->id, res_message);
+        botPtr->_bot->getApi().sendMessage(message->chat->id, res_message);
 
     } else {
-        send_wrong_auth_message(message->from->id);
+        send_wrong_auth_message(botPtr, message->from->id);
     }
 }
 
-void handleStopCommand(const TgBot::Message::Ptr &message) {
+void handleStopCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
 
-    auto botPtr = FlowBot::get_botPtr();
 
     if (isAuthenticated(message->from->id)) {
-        if (EnvKeeper::get_last_stop_id() >= message->messageId) {
-            botPtr->getApi().sendMessage(message->chat->id,
-                                         "The bot is already stopped");
+        if (botPtr->_env_keeper.get_last_stop_id() >= message->messageId) {
+            botPtr->_bot->getApi().sendMessage(message->chat->id,
+                                               "The bot is already stopped");
         } else {
-            botPtr->getApi().sendMessage(message->chat->id,
-                                         "The bot is stopped");
-            FlowBot::Stop();
+            botPtr->_bot->getApi().sendMessage(message->chat->id,
+                                               "The bot is stopped");
+            botPtr->Stop();
         }
 
     } else {
-        send_wrong_auth_message(message->from->id);
+        send_wrong_auth_message(botPtr, message->from->id);
     }
 }
 
-void handleAnyMessage(const TgBot::Message::Ptr &message) {
-
-    auto botPtr = FlowBot::get_botPtr();
+void handleAnyMessage(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
 
     if (isAuthenticated(message->from->id)) {
-        auto expenses = FlowBot::get_expensePtr()->getAllExpenses();
+        auto expenses = botPtr->_expense->getAllExpenses();
 
         std::cout << "User : " << message->from->id << " wrote " << message->text
                   << std::endl;
@@ -82,26 +77,26 @@ void handleAnyMessage(const TgBot::Message::Ptr &message) {
             return;
         }
 
-        botPtr->getApi().sendMessage(message->chat->id,
-                                     "Your message is: " + message->text); // Debug only!
+        botPtr->_bot->getApi().sendMessage(message->chat->id,
+                                           "Your message is: " + message->text); // Debug only!
 
 
         DB::DBExpense *expense;
         try {
-            expense = new DB::DBExpense(FlowBot::get_expensePtr()->addExpense(message->text, message->from->id));
+            expense = new DB::DBExpense(botPtr->_expense->addExpense(message->text, message->from->id));
         } catch (std::exception &e) { //TODO: Add custom exception
-            botPtr->getApi().sendMessage(message->chat->id,
-                                         "Wrong format");
+            botPtr->_bot->getApi().sendMessage(message->chat->id,
+                                               "Wrong format");
             return;
         }
 
         std::string message_text = "Added expenses " + std::to_string(expense->amount) + " for " +
-                                   expense->category_codename + "\n\n" + FlowBot::get_expensePtr()->get_today_stat();
-        botPtr->getApi().sendMessage(message->chat->id, message_text);
+                                   expense->category_codename + "\n\n" + botPtr->_expense->get_today_stat();
+        botPtr->_bot->getApi().sendMessage(message->chat->id, message_text);
         delete expense;
 
     } else {
-        send_wrong_auth_message(message->from->id);
+        send_wrong_auth_message(botPtr, message->from->id);
     }
 }
 

@@ -65,6 +65,7 @@ add_library(bot_lib STATIC
             src/Helper.cpp
             src/Handlers.cpp
             src/Auth.cpp
+
             )
 
 target_include_directories(bot_lib
