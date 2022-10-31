@@ -63,6 +63,7 @@ add_library(bot_lib STATIC
             src/Flow_Bot.cpp
             src/Bot_Exceptions.cpp
             src/Helper.cpp
+            src/Handlers.cpp
             )
 
 target_include_directories(bot_lib
