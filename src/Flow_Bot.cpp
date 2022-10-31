@@ -82,17 +82,19 @@ void FlowBot::Stop() {
 /// Check Auth
 void FlowBot::_initHandlers() {
 
-    _bot->getEvents().onCommand(Helper::onHelp, [&](TgBot::Message::Ptr &message) {
-//        handleHelpCommand(this, message);
+    _bot->getEvents().onCommand(Helper::onHelp, [&](const TgBot::Message::Ptr &message) {
+        handleHelpCommand(this, message);
     });
-//    _bot->getEvents().onCommand("expenses", [this](TgBot::Message::Ptr &message) {
-//        handleExpensesCommand(this, message);
-//    }
-//    _bot->getEvents().onCommand("stop", [this](TgBot::Message::Ptr &message) {
-//        handleStopCommand(this, message);
-//    }
-//
-//    _bot->getEvents().onAnyMessage(handleAnyMessage);
+    _bot->getEvents().onCommand("expenses", [&](const TgBot::Message::Ptr &message) {
+        handleExpensesCommand(this, message);
+    });
+    _bot->getEvents().onCommand("stop", [&](const TgBot::Message::Ptr &message) {
+        handleStopCommand(this, message);
+    });
+
+    _bot->getEvents().onAnyMessage([&](const TgBot::Message::Ptr &message) {
+        handleAnyMessage(this, message);
+    });
 
 }
 
@@ -127,6 +129,11 @@ TgBot::Bot *FlowBot::get_botPtr() {
 Expense *FlowBot::get_expensePtr() {
 
     return _expense;
+}
+
+EnvKeeper *FlowBot::get_envKeeper() {
+
+    return &_env_keeper;
 }
 
 

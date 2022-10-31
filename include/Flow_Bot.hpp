@@ -29,6 +29,8 @@ public:
 
     Expense *get_expensePtr();
 
+    EnvKeeper *get_envKeeper();
+
 private:
     bool _is_running;
     EnvKeeper _env_keeper;
@@ -42,15 +44,7 @@ private:
 
     void _set_bot_commands();
 
-//    friend void handleHelpCommand(FlowBot *, const TgBot::Message::Ptr &);
-//
-//    friend void handleExpensesCommand(FlowBot *, const TgBot::Message::Ptr &);
-//
-//    friend void handleStopCommand(FlowBot *, const TgBot::Message::Ptr &);
-//
-//    friend void handleAnyMessage(FlowBot *, const TgBot::Message::Ptr &);
-//
-//    friend void send_wrong_auth_message(FlowBot *, const long long &);
+
 };
 
 

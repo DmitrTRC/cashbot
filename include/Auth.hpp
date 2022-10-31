@@ -5,6 +5,7 @@
 #ifndef CASHBOT_DEV_AUTH_HPP
 #define CASHBOT_DEV_AUTH_HPP
 
+#include "Env_Keeper.hpp"
 //TODO: Refactor to Template Wrapper
 
 //template<typename T>
@@ -37,6 +38,6 @@
 //
 //}
 
-bool isAuthenticated(const long long &);
+bool isAuthenticated(EnvKeeper *, const long long &);
 
 #endif //CASHBOT_DEV_AUTH_HPP

@@ -5,9 +5,9 @@
 #include "Auth.hpp"
 #include "Env_Keeper.hpp"
 
-bool isAuthenticated(const long long &user_id) {
+bool isAuthenticated(EnvKeeper *keeper, const long long &user_id) {
 
-    auto ids = EnvKeeper::get_user_ids();
+    auto ids = keeper->get_user_ids();
 
     return ids.find(user_id) != ids.end();
 }
