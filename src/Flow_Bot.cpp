@@ -171,17 +171,6 @@ int FlowBot::get_last_message_id() {
     return updates.back()->message->messageId;
 }
 
-bool FlowBot::isAuthenticated(const long long &user_id) {
-
-    auto ids = _env_keeper.get_user_ids();
-
-    return ids.find(user_id) != ids.end();
-}
-
-void FlowBot::send_wrong_auth_message(const long long &user_id) {
-
-    _bot->getApi().sendMessage(user_id, "You are not authenticated");
-}
 
 void FlowBot::_set_bot_commands() {
 

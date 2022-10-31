@@ -5,9 +5,14 @@
 #ifndef CASHBOT_FEATURE_EXPENSE_HANDLERS_HPP
 #define CASHBOT_FEATURE_EXPENSE_HANDLERS_HPP
 
+#include "Auth.hpp"
+#include "Helper.hpp"
+
 #include <tgbot/tgbot.h>
 
-void handleHelpCommand(TgBot::Bot *_bot, const TgBot::Message::Ptr &message);
+void handleHelpCommand(TgBot::Bot *, const TgBot::Message::Ptr &);
+
+void send_wrong_auth_message(TgBot::Bot *, const long long &);
 
 
 #endif //CASHBOT_FEATURE_EXPENSE_HANDLERS_HPP

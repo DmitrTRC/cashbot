@@ -18,32 +18,32 @@ const std::string DEFAULT_PATH = ".config.json";
 
 class EnvKeeper {
 public:
-    EnvKeeper ();
+    EnvKeeper();
 
-    explicit EnvKeeper (const std::string &);
+    explicit EnvKeeper(const std::string &);
 
-    ~EnvKeeper ();
+    ~EnvKeeper();
 
-    [[nodiscard]] std::string get_Token () const;
+    [[nodiscard]] std::string get_Token() const;
 
-    void set_last_stop_id (int);
+    void set_last_stop_id(int);
 
-    int get_last_stop_id ();
+    int get_last_stop_id();
 
-    [[nodiscard]] bool is_Empty () const;
+    [[nodiscard]] bool is_Empty() const;
 
     //TODO: Refactor to size_t instead of long long
-    [[nodiscard]] std::set<long long> get_user_ids () const;
+    [[nodiscard]] static std::set<long long> get_user_ids();
 
 
 private:
-    json _env;
+    static json _env;
 
     std::string _path;
 
-    json load_environment ();
+    json load_environment();
 
-    void save_environment ();
+    void save_environment();
 
 };
 

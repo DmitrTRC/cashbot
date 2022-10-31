@@ -15,9 +15,10 @@
  *
  * @param path The path to the environment file.
  */
-EnvKeeper::EnvKeeper (const std::string &path) {
+EnvKeeper::EnvKeeper(const std::string &path) {
+
     _path = path;
-    _env = load_environment ();
+    _env = load_environment();
 }
 
 
@@ -28,21 +29,22 @@ EnvKeeper::EnvKeeper (const std::string &path) {
  *
  * @return A json object
  */
-json EnvKeeper::load_environment () {
+json EnvKeeper::load_environment() {
 
 
-    std::ifstream json_file (_path);
+    std::ifstream json_file(_path);
 
-    json env = json::parse (json_file);
+    json env = json::parse(json_file);
 
 
     return env;
 }
 
 ///Save environment
-void EnvKeeper::save_environment () {
-    std::ofstream json_file (_path);
-    json_file << _env.dump (4);
+void EnvKeeper::save_environment() {
+
+    std::ofstream json_file(_path);
+    json_file << _env.dump(4);
 
 }
 
@@ -60,41 +62,45 @@ void EnvKeeper::save_environment () {
  *
  * @return A boolean value.
  */
-bool EnvKeeper::is_Empty () const {
+bool EnvKeeper::is_Empty() const {
 
-    return _env.empty ();
+    return _env.empty();
 }
 
-std::string EnvKeeper::get_Token () const {
+std::string EnvKeeper::get_Token() const {
+
     std::string token;
     try {
-        token = _env["TELEGRAM_API_TOKEN"].get<std::string> ();
+        token = _env["TELEGRAM_API_TOKEN"].get<std::string>();
     } catch (std::exception &e) {
-        std::cout << e.what () << "Invalid Token INFO" << std::endl;
+        std::cout << e.what() << "Invalid Token INFO" << std::endl;
 
     }
 
     return token;
 }
 
-void EnvKeeper::set_last_stop_id (int id) {
+void EnvKeeper::set_last_stop_id(int id) {
+
     _env["LAST_STOP_ID"] = id;
-    save_environment ();
+    save_environment();
 }
 
-int EnvKeeper::get_last_stop_id () {
-    return _env["LAST_STOP_ID"].get<int> ();
+int EnvKeeper::get_last_stop_id() {
+
+    return _env["LAST_STOP_ID"].get<int>();
 }
 
-EnvKeeper::EnvKeeper () : EnvKeeper (DEFAULT_PATH) {}
+EnvKeeper::EnvKeeper() : EnvKeeper(DEFAULT_PATH) {}
 
 /// Return  a set of user ids from the environment
-std::set<long long> EnvKeeper::get_user_ids () const {
+std::set<long long> EnvKeeper::get_user_ids() {
+
     std::set<long long> user_ids;
-    auto ids = _env["USER_ID"].get<std::vector<long long>> ();
+    auto ids = _env["USER_ID"].get<std::vector<long long>>();
 
     for (auto id: ids) {
-        user_ids.insert (id);
+        user_ids.insert(id);
     }
 
     return user_ids;
@@ -104,4 +110,4 @@ std::set<long long> EnvKeeper::get_user_ids () const {
 /**
  * The destructor for the EnvKeeper class.
  */
-EnvKeeper::~EnvKeeper () = default;
+EnvKeeper::~EnvKeeper() = default;
