@@ -38,6 +38,12 @@
 //
 //}
 
+/**
+ * @brief Check if user is authorized
+ * @param keeper EnvKeeper - pointer to EnvKeeper
+ * @param user_id long long - user id
+ * @returns true if user is authorized
+ */
 bool isAuthenticated(EnvKeeper *, const long long &);
 
 #endif //CASHBOT_DEV_AUTH_HPP

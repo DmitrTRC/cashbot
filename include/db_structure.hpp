@@ -11,7 +11,6 @@
 
 namespace DB {
 
-//New DB record with Expense
     struct DBExpense {
         long id;
         long user_id;
