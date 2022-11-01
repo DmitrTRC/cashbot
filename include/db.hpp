@@ -15,11 +15,20 @@
 #include <sqlite3.h>
 
 
+/// Path to the database file
 constexpr auto DB_PATH = "../db/cashbot.db";
 
 //TODO: Need to be Atomic
+/**
+ * @brief Class for working with the database
+ */
 class botDB {
+
 public:
+    /**
+     * @brief Constructor
+     * @param db_path Path to the database file
+     */
     botDB() : botDB(DB_PATH) {};
 
     explicit botDB(const std::string &db_path);
