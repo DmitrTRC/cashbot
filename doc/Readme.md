@@ -1,8 +1,8 @@
 # Expense Tracker Bot Project
 
 ## TODO List
+- 
 
-- Complete bot commands
 - Write tests
 - Write documentation
 - Write a better README and GitHub presentation page
