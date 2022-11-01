@@ -39,6 +39,8 @@ public:
 
     void deleteExpense(const long &id);
 
+    Categories *getCategoriesPtr();
+
 private:
     botDB *_db_handler;
 

@@ -99,3 +99,20 @@ void handleAnyMessage(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
         send_wrong_auth_message(botPtr, message->from->id);
     }
 }
+
+void handleCategoriesCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
+
+    if (isAuthenticated(botPtr->get_envKeeper(), message->from->id)) {
+        auto categories = botPtr->get_expensePtr()->getCategoriesPtr()->getAllCategories();
+        std::string res_message = "Categories:\n";
+
+        for (auto &category: categories) {
+            res_message += category.codename + " " + category.name + "\n";
+        }
+
+        botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, res_message);
+
+    } else {
+        send_wrong_auth_message(botPtr, message->from->id);
+    }
+}

@@ -200,6 +200,11 @@ std::string Expense::get_month_stat() {
     return result_str;
 }
 
+Categories *Expense::getCategoriesPtr() {
+
+    return _categories;
+}
+
 
 
 
