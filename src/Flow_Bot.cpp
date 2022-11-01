@@ -90,15 +90,24 @@ void FlowBot::_initHandlers() {
     });
     _bot->getEvents().onCommand("stop", [&](const TgBot::Message::Ptr &message) {
         handleStopCommand(this, message);
-    })
+    });
 
     _bot->getEvents().onCommand("categories", [&](const TgBot::Message::Ptr &message) {
         handleCategoriesCommand(this, message);
     });
 
+    _bot->getEvents().onCommand("today", [&](const TgBot::Message::Ptr &message) {
+        handleTodayCommand(this, message);
+    });
+
+    _bot->getEvents().onCommand("month", [&](const TgBot::Message::Ptr &message) {
+        handleMonthCommand(this, message);
+    });
+
     _bot->getEvents().onAnyMessage([&](const TgBot::Message::Ptr &message) {
         handleAnyMessage(this, message);
     });
+
 
 }
 

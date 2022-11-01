@@ -18,6 +18,10 @@ void handleAnyMessage(FlowBot *, const TgBot::Message::Ptr &);
 
 void handleCategoriesCommand(FlowBot *, const TgBot::Message::Ptr &);
 
+void handleTodayCommand(FlowBot *, const TgBot::Message::Ptr &);
+
+void handleMonthCommand(FlowBot *, const TgBot::Message::Ptr &);
+
 void send_wrong_auth_message(FlowBot *, const long long &);
 
 

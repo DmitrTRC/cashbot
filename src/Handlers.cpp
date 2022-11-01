@@ -116,3 +116,25 @@ void handleCategoriesCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message
         send_wrong_auth_message(botPtr, message->from->id);
     }
 }
+
+void handleTodayCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
+
+    if (isAuthenticated(botPtr->get_envKeeper(), message->from->id)) {
+        auto today_stat = botPtr->get_expensePtr()->get_today_stat();
+        botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, today_stat);
+
+    } else {
+        send_wrong_auth_message(botPtr, message->from->id);
+    }
+}
+
+void handleMonthCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
+
+    if (isAuthenticated(botPtr->get_envKeeper(), message->from->id)) {
+        auto month_stat = botPtr->get_expensePtr()->get_month_stat();
+        botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, month_stat);
+
+    } else {
+        send_wrong_auth_message(botPtr, message->from->id);
+    }
+}
