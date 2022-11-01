@@ -149,6 +149,7 @@ DB::TExpenses Expense::getAllExpenses(const int &limit) {
     DB::TExpenses expenses;
     for (auto row: result) {
         DB::DBExpense expense = {
+                .id = std::stol(row["id"]),
                 .user_id = 0, // ! FIXME: DO not filled!
                 .amount = std::stol(row["amount"]),
                 .created = row["created"],

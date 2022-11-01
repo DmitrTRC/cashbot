@@ -13,6 +13,7 @@ namespace DB {
 
 //New DB record with Expense
     struct DBExpense {
+        long id;
         long user_id;
         long amount;
         std::string created;
@@ -20,13 +21,7 @@ namespace DB {
         std::string raw_text;
     };
 
-//Expense Item
-    struct Expense {
-        long id;
-        long user_id;
-        long amount;
-        std::string category;
-    };
+
     using TExpenses = std::vector<DBExpense>;
 
     struct Category {

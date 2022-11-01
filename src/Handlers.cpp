@@ -7,6 +7,7 @@
 #include "Flow_Bot.hpp"
 #include "Helper.hpp"
 
+#include <tgbot/tgbot.h>
 
 void send_wrong_auth_message(FlowBot *botPtr, const long long &user_id) {
 
@@ -33,7 +34,9 @@ void handleExpensesCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) 
         std::string res_message = "Last expenses:\n";
 
         for (auto &expense: expenses) {
-            res_message += expense.created + " " + std::to_string(expense.amount) + " " + expense.raw_text + "\n";
+            res_message +=
+                    std::to_string(expense.id) + " : " + expense.created + " " + std::to_string(expense.amount) + " " +
+                    expense.raw_text + "\n";
         }
 
         botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, res_message);
@@ -80,21 +83,28 @@ void handleAnyMessage(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
         botPtr->get_botPtr()->getApi().sendMessage(message->chat->id,
                                                    "Your message is: " + message->text); // Debug only!
 
-
-        DB::DBExpense *expense;
-        try {
-            expense = new DB::DBExpense(botPtr->get_expensePtr()->addExpense(message->text, message->from->id));
-        } catch (std::exception &e) { //TODO: Add custom exception
+        if (StringTools::startsWith(message->text, "/del")) {
+            auto id = std::stoll(message->text.substr(5));
+            botPtr->get_expensePtr()->deleteExpense(id);
             botPtr->get_botPtr()->getApi().sendMessage(message->chat->id,
-                                                       "Wrong format");
-            return;
+                                                       "Expense with id " + std::to_string(id) + " deleted");
+        } else {
+
+            DB::DBExpense *expense;
+            try {
+                expense = new DB::DBExpense(botPtr->get_expensePtr()->addExpense(message->text, message->from->id));
+            } catch (std::exception &e) { //TODO: Add custom exception
+                botPtr->get_botPtr()->getApi().sendMessage(message->chat->id,
+                                                           "Wrong format");
+                return;
+            }
+
+            std::string message_text = "Added expenses " + std::to_string(expense->amount) + " for " +
+                                       expense->category_codename + "\n\n" + botPtr->get_expensePtr()->get_today_stat();
+            botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, message_text);
+            delete expense;
+
         }
-
-        std::string message_text = "Added expenses " + std::to_string(expense->amount) + " for " +
-                                   expense->category_codename + "\n\n" + botPtr->get_expensePtr()->get_today_stat();
-        botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, message_text);
-        delete expense;
-
     } else {
         send_wrong_auth_message(botPtr, message->from->id);
     }
