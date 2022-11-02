@@ -4,6 +4,9 @@
 
 #include "Helper.hpp"
 
+#include <iomanip>
+#include <sstream>
+
 
 /**
  * @brief  It compose a string that contains the help message.
@@ -18,10 +21,13 @@ std::string Helper::helpMessage() {
                           "Example : 2000 food\n"
                           "The first number is the amount of money you spent, the second is the category\n\n";
 
-
+// Format message string to make it look better
+    std::stringstream command_stream;
     for (const auto &command: Helper::_bot_commands) {
-        message += "/" + std::string(command.first) + " - " + std::string(command.second) + "\n";
+
+        command_stream << "/" << std::left << std::setw(20) << std::string(command.first)
+                       << " - " << std::internal << std::setw(30) << std::string(command.second) << "\n";
     }
 
-    return message;
+    return message + command_stream.str();
 }
