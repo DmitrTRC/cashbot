@@ -5,12 +5,14 @@
 #ifndef CASHBOT_DEV_HELPER_HPP
 #define CASHBOT_DEV_HELPER_HPP
 
-#include <string>
 #include <initializer_list>
+#include <string>
 #include <vector>
 
 //TODO: Make associative array for handlers
-
+/**
+ * @brief namespace for helper functions
+ */
 namespace Helper {
 
     const std::initializer_list<std::string> onHelp = {"start", "help"}; ///List of commands for help
@@ -34,5 +36,7 @@ namespace Helper {
             {"stop",       "Stop the bot"}
 
     };
+
 }
+
 #endif //CASHBOT_DEV_HELPER_HPP
