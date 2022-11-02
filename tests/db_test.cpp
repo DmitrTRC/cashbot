@@ -1,12 +1,13 @@
 //
 // Created by Dmitry Morozov on 8/10/22.
 //
-#include <gtest/gtest.h>
-
 #include "db.hpp"
 #include "db_structure.hpp"
 
+#include <gtest/gtest.h>
+
 #include <filesystem>
+
 
 TEST(DBTest, DefaultConstructor_test) {
 

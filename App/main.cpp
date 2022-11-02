@@ -2,9 +2,9 @@
 
 
 /**
- * `bot.Start ()` starts the bot
+ * Entry point of the program
  *
- * @return 0
+ * @return The return value 0 means that the program was executed successfully.
  */
 int main() {
 
