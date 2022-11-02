@@ -8,24 +8,40 @@
 
 #include <regex>
 
+/**
+ *  the constructor for the `Expense` class
+ */
 Expense::Expense() {
 
-    _db_handler = new botDB();
-    _categories = new Categories(_db_handler);
+    _db_handler = new botDB();  // Create a new database handler
+    _categories = new Categories(_db_handler); // Create a new categories handler
+
 };
 
+/**
+ * The destructor for the Expense class
+ */
 Expense::~Expense() {
 
     delete _db_handler;
     delete _categories;
+
 }
 
+/**
+ * It takes a message, parses it, gets the category, creates an expense object, and inserts it into the database
+ *
+ * @param message The message that the user sent to the bot.
+ * @param user The user ID of the user who sent the message.
+ *
+ * @return DB::DBExpense
+ */
 DB::DBExpense Expense::addExpense(const std::string &message, long user) {
 
     Message parsedMessage = ParseMsg(message);
 
     DB::Category category = _categories->getCategory(parsedMessage.category_text);
-    //TODO: Return time without seconds
+
     DB::DBExpense expense = {
             .user_id = user,
             .amount = parsedMessage.amount,
@@ -34,24 +50,29 @@ DB::DBExpense Expense::addExpense(const std::string &message, long user) {
             .raw_text = message
     };
 
-
     std::map<std::string, std::string> sqlExpense = getSQLExpense(expense);
 
-    _db_handler->insertRow("expense", sqlExpense);
+    _db_handler->insertRow("expense", sqlExpense);  // Insert the expense into the database
 
     return expense;
-
 }
 
 
-///Converts current date to string
+/**
+ * It converts a time_t variable to a string in the format of YYYY-MM-DD
+ *
+ * @param now_time The time to be converted to a string.
+ *
+ * @return The date in the format of YYYY-MM-DD
+ */
 std::string Expense::getDateToStr(time_t now_time) {
 
     struct tm *now_tm = localtime(&now_time);
     char date[20];
-    strftime(date, 20, "%Y-%m-%d", now_tm);
-    return {date};
 
+    strftime(date, 20, "%Y-%m-%d", now_tm);
+
+    return {date};
 }
 
 ///Parse message to get amount and category
