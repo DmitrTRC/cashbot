@@ -17,8 +17,9 @@
  */
 EnvKeeper::EnvKeeper(const std::string &path) {
 
-    _path = path;
-    _env = load_environment();
+    _path = path; // Save the path to the environment file.
+    _env = load_environment(); // Load the environment.
+
 }
 
 
@@ -31,31 +32,25 @@ EnvKeeper::EnvKeeper(const std::string &path) {
  */
 json EnvKeeper::load_environment() {
 
-
     std::ifstream json_file(_path);
 
     json env = json::parse(json_file);
 
-
     return env;
-}
-
-///Save environment
-void EnvKeeper::save_environment() {
-
-    std::ofstream json_file(_path);
-    json_file << _env.dump(4);
-
 }
 
 
 /**
- * Checks if the user id is valid
- *
- * @param user_id The user id to check
- *
- * @return True if the user id is valid, false otherwise
+ * It opens a file, writes the environment to it, and closes the file
  */
+void EnvKeeper::save_environment() {
+
+    std::ofstream json_file(_path);
+
+    json_file << _env.dump(4);
+
+}
+
 
 /**
  * Returns true if the environment is empty, false otherwise.
@@ -67,6 +62,11 @@ bool EnvKeeper::is_Empty() const {
     return _env.empty();
 }
 
+/**
+ * It gets the token from the environment variable.
+ *
+ * @return A TOKEN string
+ */
 std::string EnvKeeper::get_Token() const {
 
     std::string token;
@@ -80,23 +80,50 @@ std::string EnvKeeper::get_Token() const {
     return token;
 }
 
+/**
+ * It sets the value of the environment variable LAST_STOP_ID to the value of the parameter id
+ *
+ * @brief setter for the LAST_STOP_ID
+ * @param id The id of the stop
+ */
 void EnvKeeper::set_last_stop_id(int id) {
 
     _env["LAST_STOP_ID"] = id;
+
     save_environment();
+
 }
 
+/**
+ * This function returns the last stop id from the environment
+ *
+ * @brief getter for the LAST_STOP_ID
+ * @return The last stop id.
+ */
 int EnvKeeper::get_last_stop_id() {
 
     return _env["LAST_STOP_ID"].get<int>();
+
 }
 
+/**
+ * EnvKeeper::EnvKeeper() : EnvKeeper(DEFAULT_PATH) {}
+ *
+ * The above function is a constructor for the EnvKeeper class. It takes no arguments and calls the EnvKeeper constructor
+ * that takes a string argument. The string argument is the default path
+ */
 EnvKeeper::EnvKeeper() : EnvKeeper(DEFAULT_PATH) {}
 
 /// Return  a set of user ids from the environment
+/**
+ * It returns a set of user ids
+ *
+ * @return A set of user ids.
+ */
 std::set<long long> EnvKeeper::get_user_ids() {
 
     std::set<long long> user_ids;
+
     auto ids = _env["USER_ID"].get<std::vector<long long>>();
 
     for (auto id: ids) {
