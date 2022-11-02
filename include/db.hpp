@@ -141,7 +141,6 @@ private:
      */
     bool _check_db_exists();
 
-
     bool _call_state = false; ///< Call state for the database Exec callback
 
 };
