@@ -4,8 +4,14 @@
 
 #include "Helper.hpp"
 
-std::string Helper::helpMessage() {
 
+/**
+ * @brief  It compose a string that contains the help message.
+ *
+ * @returns std::string that contains the help message.
+ */
+std::string Helper::helpMessage() {
+    ///Greetings message
     std::string message = "Hello! I'm a bot that helps you to track your expenses. \n"
                           "Here is the list of commands that I can understand:\n\n"
                           "For adding an expense:\n"
