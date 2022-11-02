@@ -21,7 +21,7 @@ public:
      * @brief Constructor
      * @param db Pointer to the database
      */
-    explicit Categories(botDB *db);
+    explicit Categories(botDB *);
 
 
     ///<Destructor
@@ -51,7 +51,7 @@ private:
      * @brief Fill alias names for categories
      * @returns Vector of categories
      */
-    static DB::TCategories _fill_aliases(std::vector<std::map<std::string, std::string>> &categories);
+    static DB::TCategories _fill_aliases(std::vector<std::map<std::string, std::string>> &);
 
 
     /**

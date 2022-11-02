@@ -44,6 +44,7 @@ DB::Category Categories::getCategory(const std::string &categoryName) {
     if (resultCategory.codename.empty()) {
         resultCategory = otherCategory;
     }
+
     return resultCategory;
 }
 
@@ -86,7 +87,7 @@ DB::TCategories Categories::_getCategoriesFromDB() {
     std::vector<std::map<std::string, std::string >> categories = _db_handler->fetchAll(query_name, columns);
     auto result = _fill_aliases(categories);
 
-    return {result}; //TODO: return result! (now it's empty)
+    return {result};
 }
 
 /**
@@ -101,4 +102,3 @@ Categories::Categories(botDB *db) {
     _categories = _getCategoriesFromDB();
 
 }
-
