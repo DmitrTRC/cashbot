@@ -10,9 +10,9 @@
 #include <set>
 #include <string>
 
-using json = nlohmann::json; ///< JSON library
+using json = nlohmann::json; /// JSON library
 
-const std::string DEFAULT_PATH = ".config.json"; ///< Default path to the config file
+const std::string DEFAULT_PATH = ".config.json"; /// Default path to the config file
 
 
 
@@ -74,9 +74,9 @@ public:
 
 
 private:
-    json _env; ///< JSON object with the environment variables
+    json _env; /// JSON object with the environment variables
 
-    std::string _path; ///< Path to the config file
+    std::string _path; /// Path to the config file
 
     /**
      * @brief Read the config file

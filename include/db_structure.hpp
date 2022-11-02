@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace DB { ///< The namespace for the database
+namespace DB { /// The namespace for the database
 
     /**
      * The structure for the expense table
@@ -23,7 +23,7 @@ namespace DB { ///< The namespace for the database
     };
 
 
-    using TExpenses = std::vector<DBExpense>; ///< The type for the vector of expenses
+    using TExpenses = std::vector<DBExpense>; /// The type for the vector of expenses
 
     /**
      * The structure for the category table
@@ -35,7 +35,7 @@ namespace DB { ///< The namespace for the database
         std::vector<std::string> aliases; ///< The aliases of the category
     };
 
-    using TCategories = std::vector<Category>; ///< The type for the categories vector
+    using TCategories = std::vector<Category>; /// The type for the categories vector
 
     /**
      * The structure for the Budget table
@@ -45,7 +45,7 @@ namespace DB { ///< The namespace for the database
         long daily_limit; ///< The daily limit of the budget
     };
 
-    using TBudgets = std::vector<Budget>; ///< The type for the budgets vector
+    using TBudgets = std::vector<Budget>; /// The type for the budgets vector
 
 }
 

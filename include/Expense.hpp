@@ -12,10 +12,12 @@
 #include <cstdlib>
 #include <string>
 
-///<Parsed Expense message
+/**
+ * @brief Parsed expense message
+ */
 struct Message {
-    long amount;
-    std::string category_text;
+    long amount; ///< The amount of the expense
+    std::string category_text; ///< The text of the category
 };
 
 /**
@@ -91,9 +93,9 @@ public:
     Categories *getCategoriesPtr();
 
 private:
-    botDB *_db_handler; ///< DB handler
+    botDB *_db_handler; /// DB handler
 
-    Categories *_categories; ///< Categories object pointer
+    Categories *_categories; /// Categories object pointer
 
     /**
      * @brief Parse message to get amount and category

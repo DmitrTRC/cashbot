@@ -16,6 +16,7 @@
  * @brief Class for working with the categories table
  */
 class Categories {
+
 public:
     /**
      * @brief Constructor
@@ -24,7 +25,9 @@ public:
     explicit Categories(botDB *);
 
 
-    ///<Destructor
+    /**
+      * @brief Destructor for Categories
+      */
     ~Categories() = default;
 
     /**
@@ -41,11 +44,11 @@ public:
 
 
 private:
-    ///< Pointer to the database
-    botDB *_db_handler; ///< Pointer to the database
 
-    ///< Vector of categories
-    DB::TCategories _categories; ///< Vector of categories
+    botDB *_db_handler; ///
+
+
+    DB::TCategories _categories; /// Vector of categories
 
     /**
      * @brief Fill alias names for categories

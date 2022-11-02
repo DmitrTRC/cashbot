@@ -15,7 +15,7 @@
 #include <string>
 
 
-///< Constexpr for the database name
+/// Constexpr for the database name
 constexpr auto DB_PATH = "../db/cashbot.db";
 
 
@@ -31,10 +31,10 @@ public:
      */
     botDB() : botDB(DB_PATH) {};
 
-    ///< Constructor with path to the database file
+    /// Constructor with path to the database file
     explicit botDB(const std::string &db_path);
 
-    ///< Destructor
+    /// Destructor
     ~botDB();
 
     /**
@@ -64,7 +64,9 @@ public:
     void fill_base_categories();
 
 
-    ///< Clearing the database.
+    /**
+     * @brief clear all tables
+     */
     void clearDB();
 
 
@@ -115,9 +117,9 @@ public:
 
 private:
 
-    sqlite3 *_bot_db; ///< Pointer to the database
+    sqlite3 *_bot_db; /// Pointer to the database
 
-    std::string _bot_db_path; ///< Path to the database file
+    std::string _bot_db_path; /// Path to the database file
 
     /**
      * @brief Open the database
@@ -141,7 +143,7 @@ private:
      */
     bool _check_db_exists();
 
-    bool _call_state = false; ///< Call state for the database Exec callback
+    bool _call_state = false; /// Call state for the database Exec callback
 
 };
 
