@@ -9,13 +9,25 @@
 #include <string>
 #include <utility>
 
+/**
+ * @brief Base class for all exceptions in the project
+ */
 class WrongMsgException : public std::exception {
 private:
     std::string message;
 
 public:
+    /**
+     * @brief Constructor
+     * @param message Message that will be shown to the user
+     */
     explicit WrongMsgException(std::string msg) : message(std::move(msg)) {}
 
+
+    /**
+     * @brief Get the message that will be shown to the user
+     * @return Message that will be shown to the user as a C string
+     */
     [[nodiscard]] const char *what() const noexcept override {
 
         return message.c_str();

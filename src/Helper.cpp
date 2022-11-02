@@ -24,6 +24,4 @@ std::string Helper::helpMessage() {
     }
 
     return message;
-
-
 }
