@@ -3,8 +3,6 @@ project(bot_lib)
 
 set(CMAKE_CXX_STANDARD 20)
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wall")
-
 set(Boost_USE_MULTITHREADED ON)
 
 set(ENV{OPENSSL_ROOT_DIR} "/opt/homebrew/opt/openssl@3")
