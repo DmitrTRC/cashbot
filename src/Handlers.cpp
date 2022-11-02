@@ -137,7 +137,7 @@ void handleAnyMessage(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
             }
 
             std::string message_text = "Added expenses " + std::to_string(expense->amount) + " for " +
-                    expense->category_codename + "\n\n" + botPtr->get_expensePtr()->get_today_stat();
+                                       expense->category_codename + "\n\n" + botPtr->get_expensePtr()->get_today_stat();
 
             botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, message_text);
 
