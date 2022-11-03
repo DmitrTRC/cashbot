@@ -364,9 +364,7 @@ std::map<std::string, std::string> botDB::fetchOne(const std::string &SQL_reques
                 auto name = std::string(sqlite3_column_name(stmt, i));
                 auto value = sqlite3_column_text(stmt, i);
 
-                if (value == nullptr) {
-                    result[name] = "0"; //FIXME: this is a hack
-                } else {
+                if (value != nullptr) {
                     result[name] = std::string((char *) value);
                 }
             }
@@ -376,8 +374,6 @@ std::map<std::string, std::string> botDB::fetchOne(const std::string &SQL_reques
         std::cerr << "FetchOne Error! " << std::endl;
         std::cerr << e.what() << std::endl;
     }
-
-    std::cout << "fetchOne After catch " << std::endl;
 
     return result;
 }

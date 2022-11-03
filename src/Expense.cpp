@@ -108,7 +108,7 @@ Message Expense::ParseMsg(const std::string &message) {
  *
  * @return string with today expenses
  */
-std::string Expense::get_today_stat() { //TODO: implement
+std::string Expense::get_today_stat() {
 
     std::string SQL = "select sum(amount) from expense where date(created) = date('now', 'localtime');";
     std::map<std::string, std::string> result;
@@ -120,9 +120,8 @@ std::string Expense::get_today_stat() { //TODO: implement
         std::cout << e.what() << std::endl;
         return "Error while getting today expenses";
     }
-    std::cout << " get_today_stat() after SQL Request" << std::endl;
-    std::cout << "result: " << result.size() << std::endl;
-    if (result.empty()) {
+
+    if (result.empty()) { //FIXME: This is a temporary solution
         return "No expenses today";
     }
 
