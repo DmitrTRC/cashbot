@@ -139,6 +139,28 @@ TEST(DBTestInsert, DBInsertCategoryRow_test) {
 
 }
 
+TEST(DB_FETCH_ONE, DBFetchOne_test) {
+
+    auto *db = new botDB("../db/cashbot_test.db");
+
+    std::map<std::string, std::string> category = {
+            {"codename",        "food"},
+            {"name",            "Food"},
+            {"is_base_expense", "1"},
+            {"aliases",         "eat,drink"}
+    };
+
+    db->insertRow("category", category);
+
+    std::vector<std::string> columns = {"codename", "name", "is_base_expense", "aliases"};
+
+    std::map<std::string, std::string> result = db->fetchOne(
+            "select sum(amount) from expense where date(created) = date('now', 'localtime');");
+
+    EXPECT_EQ(result["sum(amount)"], "0");
+
+}
+
 TEST(DB_FETCHALL, DBFetchAll_test) {
 
     auto *db = new botDB("../db/cashbot_test.db");

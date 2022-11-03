@@ -188,6 +188,7 @@ void handleTodayCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
     if (isAuthenticated(botPtr->get_envKeeper(), message->from->id)) {
         std::cout << "TODAY Auth OK" << std::endl;
         auto today_stat = botPtr->get_expensePtr()->get_today_stat();
+        //std::string today_stat = "TEST STAT";
         std::cout << "TODAY Stat OK" << std::endl;
         botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, today_stat);
         std::cout << "TODAY Send OK" << std::endl;

@@ -352,22 +352,33 @@ std::string botDB::getDBPath() const {
  */
 std::map<std::string, std::string> botDB::fetchOne(std::string SQL_request) {
 
-    sqlite3_stmt *stmt;
-
-    sqlite3_prepare_v2(_bot_db, SQL_request.c_str(), -1, &stmt, nullptr);
-
     std::map<std::string, std::string> result;
+    try {
+        sqlite3_stmt *stmt;
+        std::cout << "before prepare_v2" << std::endl;
+        sqlite3_prepare_v2(_bot_db, SQL_request.c_str(), -1, &stmt, nullptr);
+        std::cout << "after prepare_v2" << std::endl;
 
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
 
-        for (int i = 0; i < sqlite3_column_count(stmt); i++) {
-            result[std::string((char *) sqlite3_column_name(stmt, i))] =
-                    std::string((char *) sqlite3_column_text(stmt, i));
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            std::cout << "inside IF before FOR" << std::endl;
+            for (int i = 0; i < sqlite3_column_count(stmt); i++) {
+                std::cout << "inside FOR" << std::endl;
+                result[std::string((char *) sqlite3_column_name(stmt, i))] =
+                        std::string((char *) sqlite3_column_text(stmt, i));
+                std::cout << "inside FOR after result" << std::endl;
+            }
+            std::cout << "after FOR" << std::endl;
         }
-
+        std::cout << "before finalize" << std::endl;
+        sqlite3_finalize(stmt);
+        std::cout << "after finalize" << std::endl;
+    } catch (std::exception &e) {
+        std::cerr << "FetchOne Error! " << std::endl;
+        std::cerr << e.what() << std::endl;
     }
 
-    sqlite3_finalize(stmt);
+    std::cout << "fetchOne After catch " << std::endl;
 
     return result;
 }
