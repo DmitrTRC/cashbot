@@ -30,7 +30,8 @@ void send_wrong_auth_message(FlowBot *botPtr, const long long &user_id) {
 void handleHelpCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
 
     if (isAuthenticated(botPtr->get_envKeeper(), message->from->id)) {
-        botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, Helper::helpMessage());
+        botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, Helper::helpMessage(), false, 0, nullptr,
+                                                   "HTML");
     } else {
         send_wrong_auth_message(botPtr, message->from->id);
     }

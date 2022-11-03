@@ -15,10 +15,10 @@
  */
 std::string Helper::helpMessage() {
     ///Greetings message
-    std::string message = "Hello! I'm a bot that helps you to track your expenses. \n"
+    std::string message = "Hello. I'm a bot that helps you to track your expenses. \n"
                           "Here is the list of commands that I can understand:\n\n"
-                          "For adding an expense:\n"
-                          "Example : 2000 food\n"
+                          "<i>For adding an expense:</i>\n"
+                          "<b>Example</b> : 2000 food\n\n"
                           "The first number is the amount of money you spent, the second is the category\n\n";
 
 // Format message string to make it look better
