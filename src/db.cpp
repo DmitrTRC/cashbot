@@ -350,29 +350,28 @@ std::string botDB::getDBPath() const {
  *
  * @return A map of strings.
  */
-std::map<std::string, std::string> botDB::fetchOne(std::string SQL_request) {
+std::map<std::string, std::string> botDB::fetchOne(const std::string &SQL_request) {
 
     std::map<std::string, std::string> result;
     try {
         sqlite3_stmt *stmt;
-        std::cout << "before prepare_v2" << std::endl;
-        sqlite3_prepare_v2(_bot_db, SQL_request.c_str(), -1, &stmt, nullptr);
-        std::cout << "after prepare_v2" << std::endl;
 
+        sqlite3_prepare_v2(_bot_db, SQL_request.c_str(), -1, &stmt, nullptr);
 
         if (sqlite3_step(stmt) == SQLITE_ROW) {
-            std::cout << "inside IF before FOR" << std::endl;
             for (int i = 0; i < sqlite3_column_count(stmt); i++) {
-                std::cout << "inside FOR" << std::endl;
-                result[std::string((char *) sqlite3_column_name(stmt, i))] =
-                        std::string((char *) sqlite3_column_text(stmt, i));
-                std::cout << "inside FOR after result" << std::endl;
+
+                auto name = std::string(sqlite3_column_name(stmt, i));
+                auto value = sqlite3_column_text(stmt, i);
+
+                if (value == nullptr) {
+                    result[name] = "0"; //FIXME: this is a hack
+                } else {
+                    result[name] = std::string((char *) value);
+                }
             }
-            std::cout << "after FOR" << std::endl;
         }
-        std::cout << "before finalize" << std::endl;
         sqlite3_finalize(stmt);
-        std::cout << "after finalize" << std::endl;
     } catch (std::exception &e) {
         std::cerr << "FetchOne Error! " << std::endl;
         std::cerr << e.what() << std::endl;

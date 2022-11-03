@@ -56,7 +56,7 @@ public:
      * @param SQL_query SQL query
      * @returns Map of values
      */
-    std::map<std::string, std::string> fetchOne(std::string);
+    std::map<std::string, std::string> fetchOne(const std::string &);
 
     /**
      * @brief Fills base categories table with default values

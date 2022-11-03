@@ -112,10 +112,9 @@ std::string Expense::get_today_stat() { //TODO: implement
 
     std::string SQL = "select sum(amount) from expense where date(created) = date('now', 'localtime');";
     std::map<std::string, std::string> result;
+
     try {
-        std::cout << "Trying to get today expenses inside Try : " << std::endl;
         result = _db_handler->fetchOne(SQL);
-        std::cout << "After fetchone , in try : " << std::endl;
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;

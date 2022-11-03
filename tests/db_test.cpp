@@ -143,23 +143,35 @@ TEST(DB_FETCH_ONE, DBFetchOne_test) {
 
     auto *db = new botDB("../db/cashbot_test.db");
 
-    std::map<std::string, std::string> category = {
-            {"codename",        "food"},
-            {"name",            "Food"},
-            {"is_base_expense", "1"},
-            {"aliases",         "eat,drink"}
+    std::map<std::string, std::string> expense = {
+            {"user_id",           "641480282"},
+            {"amount",            "100"},
+            {"created",           "2021-08-10"},
+            {"category_codename", "food"},
+            {"raw_text",          "test"}
     };
 
-    db->insertRow("category", category);
+    db->insertRow("expense", expense);
 
-    std::vector<std::string> columns = {"codename", "name", "is_base_expense", "aliases"};
+    std::vector<std::string> columns = {"id", "user_id", "amount", "created", "category_codename", "raw_text"};
+    std::string sql = "SELECT * FROM expense WHERE user_id = 641480282";
 
-    std::map<std::string, std::string> result = db->fetchOne(
-            "select sum(amount) from expense where date(created) = date('now', 'localtime');");
+    auto result = db->fetchOne(sql);
 
-    EXPECT_EQ(result["sum(amount)"], "0");
+    EXPECT_EQ(result.size(), 6);
 
-}
+    EXPECT_EQ(result["user_id"], "641480282");
+
+    EXPECT_EQ(result["amount"], "100");
+
+    EXPECT_EQ(result["created"], "2021-08-10");
+
+
+};
+
+
+
+
 
 TEST(DB_FETCHALL, DBFetchAll_test) {
 
