@@ -2,12 +2,10 @@
 // Created by Dmitry Morozov on 31/10/22.
 //
 
+#include "emoji.hpp"
 #include "Helper.hpp"
 
-#include <tgbot/tgbot.h>
-
 #include <iomanip>
-#include <sstream>
 
 
 /**
@@ -18,12 +16,10 @@
 std::string Helper::helpMessage() {
 
 
-
-
     ///Greetings message
-    auto botEmoji = "\U0001F916";
 
-    std::string message = "Hello. I'm a bot that helps you to track your expenses.  \n"
+
+    std::string message = "Hello! I'm a bot that helps you to track your expenses.  \n"
                           "Here is the list of commands that I can understand:\n\n"
                           "<i>For adding an expense:</i>\n"
                           "<b>Example</b> : 2000 food\n\n"
@@ -39,19 +35,6 @@ std::string Helper::helpMessage() {
                        << " - " << std::internal << std::setw(30) << std::string(command.second) << "\n";
     }
 
-    return botEmoji + message + command_stream.str();
+    return Emoji::botEmoji + message + command_stream.str();
 }
 
-/**
- * It returns a sticker object with the emoji "🤖"
- *
- * @param sticker_id The ID of the sticker to be sent.
- *
- * @returns A pointer to a TgBot::Sticker object.
- */
-TgBot::Sticker::Ptr botSticker(const std::string &sticker_id) {
-
-    TgBot::Sticker::Ptr sticker(new TgBot::Sticker);
-    sticker->emoji = "🤖";
-    return sticker;
-}

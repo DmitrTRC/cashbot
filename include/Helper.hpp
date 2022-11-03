@@ -39,7 +39,6 @@ namespace Helper {
 
     };
 
-    TgBot::Sticker::Ptr botSticker(const std::string &);
 
 }
 
