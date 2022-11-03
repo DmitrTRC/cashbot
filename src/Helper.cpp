@@ -21,7 +21,7 @@ std::string Helper::helpMessage() {
 
 
     ///Greetings message
-    auto botEmoji = "🏺";
+    auto botEmoji = "\U0001F916";
 
     std::string message = "Hello. I'm a bot that helps you to track your expenses.  \n"
                           "Here is the list of commands that I can understand:\n\n"
