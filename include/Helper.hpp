@@ -5,6 +5,8 @@
 #ifndef CASHBOT_DEV_HELPER_HPP
 #define CASHBOT_DEV_HELPER_HPP
 
+#include <tgbot/tgbot.h>
+
 #include <initializer_list>
 #include <string>
 #include <vector>
@@ -36,6 +38,8 @@ namespace Helper {
             {"stop",       "Stop the bot"}
 
     };
+
+    TgBot::Sticker::Ptr botSticker(const std::string &);
 
 }
 

@@ -63,6 +63,7 @@ add_library(bot_lib STATIC
             src/Helper.cpp
             src/Handlers.cpp
             src/Auth.cpp
+            
 
             )
 
