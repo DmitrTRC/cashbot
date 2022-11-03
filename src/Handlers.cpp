@@ -2,6 +2,7 @@
 // Created by Dmitry Morozov on 31/10/22.
 //
 #include "Auth.hpp"
+#include "emoji.hpp"
 #include "Env_Keeper.hpp"
 #include "Expense.hpp"
 #include "Flow_Bot.hpp"
@@ -30,9 +31,6 @@ void send_wrong_auth_message(FlowBot *botPtr, const long long &user_id) {
 void handleHelpCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) {
 
     if (isAuthenticated(botPtr->get_envKeeper(), message->from->id)) {
-        //Sends bot Sticker
-
-
 
         botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, Helper::helpMessage(), false, 0, nullptr,
                                                    "HTML");
@@ -54,12 +52,22 @@ void handleExpensesCommand(FlowBot *botPtr, const TgBot::Message::Ptr &message) 
 
         auto expenses = botPtr->get_expensePtr()->getAllExpenses();
 
-        std::string res_message = "Last expenses:\n";
+
+        std::string res_message;
+        res_message.append(Emoji::calendarEmoji);
+        res_message.append("Last expenses:\n\n");
 
         for (auto &expense: expenses) {
-            res_message +=
-                    std::to_string(expense.id) + " : " + expense.created + " " + std::to_string(expense.amount) + " " +
-                    expense.raw_text + "\n";
+
+            res_message.append(
+                    std::to_string(expense.id) + " : " + expense.created + " " + std::to_string(expense.amount) +
+                    " Dest: ");
+            auto dest = expense.raw_text.substr(expense.raw_text.find_first_of(" \t") + 1);
+            res_message.append(dest);
+            res_message.append(" Cur :  ");
+            res_message.append(Emoji::rubleEmoji).append(" (RUB)\n\n");
+
+
         }
 
         botPtr->get_botPtr()->getApi().sendMessage(message->chat->id, res_message);

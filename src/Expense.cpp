@@ -4,6 +4,7 @@
 
 #include "Bot_Exceptions.hpp"
 #include "Categories.hpp"
+#include "emoji.hpp"
 #include "Expense.hpp"
 
 #include <regex>
@@ -125,7 +126,9 @@ std::string Expense::get_today_stat() {
         return "No expenses today";
     }
 
-    std::string result_str = "Today expenses: \nTotal: " + result.begin()->second + " RUB" + "\n";
+    std::string result_str;
+    result_str.append(Emoji::calendarEmoji);
+    result_str.append("\nToday expenses: \n\nTotal: " + result.begin()->second + " RUB" + "\n");
 
     SQL = "select sum(amount) "
           "from expense where date(created)=date('now', 'localtime') "
@@ -142,7 +145,7 @@ std::string Expense::get_today_stat() {
         base_expenses = result.begin()->second;
     }
 
-    result_str += "Base expenses: " + base_expenses + " RUB" + "\n";
+    result_str += "Base expenses: " + base_expenses + " RUB" + "\n\n";
     result_str += "FROM BUDGET : " + std::to_string(getBudgetLimit() - std::stol(base_expenses)) + " RUB" + "\n";
     result_str += "LAST MONTH :  /month";
 
@@ -206,7 +209,7 @@ DB::TExpenses Expense::getLast() {
  */
 DB::TExpenses Expense::getAllExpenses(const int &limit) {
 
-    std::string SQL = "select e.id, e.amount, c.name, e.created "
+    std::string SQL = "select e.id, e.amount, c.name, e.created, e.raw_text "
                       "from expense e left join category c "
                       "on c.codename=e.category_codename "
                       "order by created desc limit " + std::to_string(limit);
@@ -254,7 +257,10 @@ std::string Expense::get_month_stat() {
         return "No expenses this month";
     }
 
-    std::string result_str = "This month expenses: \nTotal: " + result.begin()->second + " RUB" + "\n";
+    std::string result_str;
+
+    result_str.append(Emoji::calendarEmoji);
+    result_str.append("\nThis month expenses: \n\nTotal: " + result.begin()->second + " RUB" + "\n");
 
     SQL = "select sum(amount) "
           "from expense where strftime('%m', created) = strftime('%m', 'now', 'localtime') "
@@ -271,7 +277,7 @@ std::string Expense::get_month_stat() {
         base_expenses = result.begin()->second;
     }
 
-    result_str += "Base expenses: " + base_expenses + " RUB" + "\n";
+    result_str += "Base expenses: " + base_expenses + " RUB" + "\n\n";
     result_str += "FROM BUDGET : " + std::to_string(getBudgetLimit() - std::stol(base_expenses)) + " RUB" + "\n";
 
     return result_str;
