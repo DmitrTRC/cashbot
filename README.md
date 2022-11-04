@@ -32,7 +32,7 @@
   <p align="center">
     About the project:
     <br />
-    <a href="https://github.com/DmitrTRC/cashbot.git"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/DmitrTRC/cashbot/blob/main/docs/html/index.html"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/DmitrTRC/cashbot.git">View Demo</a>
@@ -159,7 +159,7 @@ C Compiler, C++ Compiler, CMake, Git.
 
 Just run the executable file in the bin directory.
 
-_For more information, please refer to
+For more information, please refer to
 the [Documentation](https://github.com/DmitrTRC/cashbot/blob/main/docs/html/index.html)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
