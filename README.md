@@ -160,7 +160,7 @@ C Compiler, C++ Compiler, CMake, Git.
 Just run the executable file in the bin directory.
 
 _For more information, please refer to
-the [Documentation](https://github.com/DmitrTRC/cashbot/docs/index.html)
+the [Documentation](https://github.com/DmitrTRC/cashbot/docs/html/index.html)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -256,7 +256,7 @@ Project Link: [https://github.com/DmitrTRC/cashbot.git](https://github.com/Dmitr
 
 [license-shield]: https://img.shields.io/github/license/DmitrTRC/cashbot?style=for-the-badge
 
-[license-url]: https://github.com/DmitrTRC/cashbot/blob/master/LICENSE
+[license-url]: https://github.com/DmitrTRC/cashbot/blob/main/LICENSE
 
 [product-screenshot]: img/bot_work.jpeg
 
