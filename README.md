@@ -256,7 +256,7 @@ Project Link: [https://github.com/DmitrTRC/cashbot.git](https://github.com/Dmitr
 
 [license-shield]: https://img.shields.io/github/license/DmitrTRC/cashbot?style=for-the-badge
 
-[license-url]: https://github.com/DmitrTRC/cashbot/blob/master/LICENSE
+[license-url]: https://github.com/DmitrTRC/cashbot/blob/main/LICENSE
 
 [product-screenshot]: img/bot_work.jpeg
 
