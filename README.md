@@ -242,7 +242,7 @@ Project Link: [https://github.com/DmitrTRC/cashbot.git](https://github.com/Dmitr
 
 [contributors-url]: https://github.com/DmitrTRC/cashbot/graphs/contributors
 
-[forks-shield]: https://img.shields.io/github/forks/cashbot?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/DmitrTRC/cashbot?style=for-the-badge
 
 [forks-url]: https://github.com/github_username/cashbot/network/members
 
