@@ -160,7 +160,7 @@ C Compiler, C++ Compiler, CMake, Git.
 Just run the executable file in the bin directory.
 
 _For more information, please refer to
-the [Documentation](https://github.com/DmitrTRC/cashbot/docs/index.html)
+the [Documentation](https://github.com/DmitrTRC/cashbot/docs/html/index.html)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
