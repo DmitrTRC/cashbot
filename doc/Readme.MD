@@ -1,5 +1,0 @@
-# EXPENSES DB
-
-
-
-
