@@ -96,6 +96,7 @@ Contains the following:
 * App/ : App directory ( contains main.cpp file )
 * db/ : database directory ( contains cashbot.db file )
 * docs/ : documentation directory ( contains sub-folders with documentation )
+* Doxyfile : Doxygen configuration file
 * bin/ : binary directory ( contains executable file )
 * .github : GitHub repository settings CI/CD workflow.
 
