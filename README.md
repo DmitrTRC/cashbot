@@ -50,13 +50,13 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#about_the_project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#built_with">Built With</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#getting_started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
@@ -67,13 +67,13 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
 
 
 <!-- ABOUT THE PROJECT -->
+<a id="about_the_project">
 
 ## About The Project
 
@@ -102,6 +102,10 @@ Contains the following:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+</a>
+
+<a id="built_with">
+
 ### Built With
 
 * [Clang](https://clang.llvm.org/)
@@ -112,9 +116,11 @@ Contains the following:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
+</a>
 
 <!-- GETTING STARTED -->
+
+<a id="getting_started">
 
 ## Getting Started
 
@@ -122,11 +128,19 @@ Be sure to have the following installed:
 
 C Compiler, C++ Compiler, CMake, Git.
 
+</a>
+
+<a id="prerequisites">
+
 ### Prerequisites
 
 * Clang, GCC, or another C compiler
 * Git
 * CMake
+
+</a>
+
+<a id="installation">
 
 ### Installation
 
@@ -151,9 +165,11 @@ C Compiler, C++ Compiler, CMake, Git.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
+</a>
 
 <!-- USAGE EXAMPLES -->
+
+<a id="usage">
 
 ## Usage
 
@@ -164,9 +180,11 @@ the [Documentation](https://dmitrtrc.github.io/cashbot/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
+</a>
 
 <!-- ROADMAP -->
+
+<a id="roadmap">
 
 ## Roadmap
 
@@ -188,9 +206,11 @@ known issues)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
+</a>
 
 <!-- CONTRIBUTING -->
+
+<a id="contributing">
 
 ## Contributing
 
@@ -208,9 +228,11 @@ simply open an issue with the tag "enhancement". Don't forget to give the projec
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
+</a>
 
 <!-- LICENSE -->
+
+<a id="license">
 
 ## License
 
@@ -218,9 +240,11 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p> 
 
-
+</a>
 
 <!-- CONTACT -->
+
+<a id="contact">
 
 ## Contact
 
@@ -230,7 +254,7 @@ Project Link: [https://github.com/DmitrTRC/cashbot.git](https://github.com/Dmitr
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
+</a>
 
 
 
