@@ -78,6 +78,7 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://https://levelp.ru)
+
 This is a Final project for
 the [LevelUP](https://levelp.ru/courses/programmirovanie/fundamentals-of-programming-c-level-1/)
 course.
@@ -158,7 +159,7 @@ C Compiler, C++ Compiler, CMake, Git.
 Just run the executable file in the bin directory.
 
 _For more information, please refer to
-the [Documentation](https://github.com/DmitrTRC/cashbot/docs/index.html)_
+the [Documentation](https://github.com/DmitrTRC/cashbot/docs/index.html)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
